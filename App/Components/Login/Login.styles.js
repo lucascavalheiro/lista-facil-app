@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginVertical: Metrics.section,
-    backgroundColor: Colors.clear
+    backgroundColor: Colors.panther
   },
   contentContainer: {
     alignSelf: 'center',
@@ -29,6 +29,5 @@ export default StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    color: Colors.text
   }
 })

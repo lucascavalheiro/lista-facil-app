@@ -28,7 +28,7 @@ class Login extends Component {
   }
 
   onLoginPress() {
-    Alert.alert('AE TONTO!');
+    Alert.alert('AE!');
   }
 
   render () {
@@ -38,6 +38,7 @@ class Login extends Component {
           style={styles.textInput}
           value={this.props.email}
           onChangeText={this.onChangeEmail}
+          placeholder="youremail@email.com"
         />
         <TextInput
           style={styles.textInput}

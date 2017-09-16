@@ -3,7 +3,8 @@ import {
 } from '../../Config/ActionTypes';
 
 const INITIAL_STATE = {
-  email: 'teste@email.com'
+  email: '',
+  password: '',
 };
 
 export default function codeVerificationReducer(state = INITIAL_STATE, action) {
