@@ -1,135 +1,62 @@
-[![GitHub tag](https://img.shields.io/github/tag/mcnamee/react-native-starter-app.svg?style=flat-square)](https://github.com/mcnamee/react-native-starter-app/tags)
-[![GitHub contributors](https://img.shields.io/github/contributors/mcnamee/react-native-starter-app.svg?style=flat-square)](https://github.com/mcnamee/react-native-starter-app/contributors)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/mcnamee/react-native-starter-app/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/mcnamee/react-native-starter-app.svg?style=flat-square)](https://github.com/mcnamee/react-native-starter-app/issues)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/mcnamee/react-native-starter-app.svg?style=flat-square)](https://github.com/mcnamee/react-native-starter-app/issues-closed)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/mcnamee/react-native-starter-app.svg?style=flat-square)](https://github.com/mcnamee/react-native-starter-app/issues-pr)
+#  ListaFacil
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-![alt text](/docs/rnsk-logo.jpg "React Native Starter Kit")
+* Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
 
-# React Native Starter Kit
+## :arrow_up: How to Setup
 
-React Native Starter Kit helps you get started with React Native. It contains a bunch of helpful components, building blocks and basic structure to allow you to jump straight into building an app.
+**Step 1:** git clone this repo:
 
-What's more, it's now integrated with [Firebase](https://firebase.google.com/), to help you kick start your next full-stack product.
+**Step 2:** cd to the cloned repo:
 
-![alt text](/docs/rnsk-screens.jpg "React Native Starter App")
+**Step 3:** Install the Application with `yarn` or `npm i`
 
----
 
-## Docs
+## :arrow_forward: How to Run App
 
-1. [Features](#features)
-1. **Before you start**
-   1. [Getting Started with React Native](/docs/react-native.md)
-   1. [React Native Quick Tips](/docs/quick-tips.md)
-   1. [Understanding the File Structure](#understanding-the-file-structure)
-   1. [Opinions Guiding this Project](/docs/opinions.md)
-1. **Using RNSK**
-   1. [Getting Up and Running with RNSK](#getting-started)
-   1. [Renaming the App from StarterKit](/docs/renaming.md)
-   1. [Routing / Navigating](/src/navigation/README.md)
-   1. [Using Google Analytics](/docs/google-analytics.md)
-   1. [Interacting with the Firebase API](https://firebase.google.com/docs/database/web/start)
-   1. [Testing](/docs/testing.md)
-1. [Contributing](/docs/contributing.md)
-1. [Licence](LICENSE)
+1. cd to the repo
+2. Run Build for either OS
+  * for iOS
+    * run `react-native run-ios`
+  * for Android
+    * Run Genymotion
+    * run `react-native run-android`
 
----
+## :no_entry_sign: Standard Compliant
 
-## Features
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
 
-| Feature | Summary |
-| --- | --- |
-| [Redux](https://github.com/reactjs/react-redux) | A predictable state container - Helping you write applications that behave consistently and run in different environments. |
-| [React Native Router Flux](https://github.com/aksonov/react-native-router-flux) | Router for React Native based on new React Native Navigation API. <br><br>['How to' Guide &rarr;](/src/navigation/README.md)|
-| [Firebase](https://firebase.google.com) | Most apps needs some sort of data. RNSK is setup and ready to go with 'data from the cloud'. |
-| [Sidebar / Hamburger Menu](https://github.com/react-native-community/react-native-side-menu) | ... |
-| [React Native Elements](https://github.com/react-native-community/react-native-elements) | Cross Platform React Native UI Toolkit. |
-| [Google Analytics](https://github.com/idehub/react-native-google-analytics-bridge) | Shows how to track screen views (includes both a 'debug' mode tracker as well as 'release' mode so that data doesn't get obfuscated). <br><br>[Setup Guide &rarr;](/docs/google-analytics.md) |
-| [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons) | Easily use icons from a wide range of icon libraries, it's as simple as importing the icon font and then `<Icon name={'ios-alert-outline'} size={50} color={"#CCC"} />`. |
-| [Tcomb Form Validation](https://github.com/gcanti/tcomb-form-native) | An example on how to create forms with validation. |
-| Component Style Guide | A bunch of elements and components to get you started - styled headings, buttons, list rows, alerts etc. |
-| Code Linting / Code Style Guide | We're using [Airbnb's](https://github.com/airbnb/javascript) JS/React Style Guide with ESLint linting. <br><br>[Get started with linting for React Native &rarr;](https://medium.com/pvtl/linting-for-react-native-bdbb586ff694) |
-| Boilerplate | An example directory/file structure I've found useful for scaling apps <br><br>[Learn more &rarr;](#understanding-the-file-structure) |
+**To Lint on Commit**
 
----
+This is implemented using [husky](https://github.com/typicode/husky). There is no additional setup needed.
 
-## Getting Started
+**Bypass Lint**
 
-1. Ensure you've followed the [React Native - Get Started Guide](https://facebook.github.io/react-native/docs/getting-started.html) for the platform/s of choice
-1. Clone this project `git clone https://github.com/mcnamee/react-native-starter-app.git`
-1. Run `npm install` from root directory
-1. Create your own .env file (to store any app secrets) - simply run `cp .env.sample .env`
-1. [Setup your own Firebase API to get the full experience](#the-api--testing-out-authentication) (optional)
-1. Start the app in [an emulator](/docs/quick-tips.md#running-in-an-emulator)
+If you have to bypass lint for a special commit that you will come back and clean (pushing something to a branch etc.) then you can bypass git hooks with adding `--no-verify` to your commit command.
 
----
+**Understanding Linting Errors**
 
-## The API & testing out authentication
-We've created a quick little "API server" on [Google's Firebase Platform](https://firebase.google.com/). You can get your own API up and running within minutes too:
+The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
 
-1. Signup for a [Firebase account](https://firebase.google.com/)
-1. Create a new project - eg. "React Native Starter App"
-1. Turn on email/password __Authentication__
-1. Enable the __Database__ feature, and import the `firebase-sample-data.json` file found in this repo
-1. Get the Firebase project's API credentials, and add them to the respective variables in your `/.env` file (eg. `APIKEY=d8f72k10s39djk29js`). You can get your projects details from Firebase, by clicking on the cog icon, next to overview > 'Add Firebase to your web app'.
-1. Add the following __rules__ to the Database
+## :closed_lock_with_key: Secrets
 
-```json
-{
-  "rules": {
-    ".read": false,
-    ".write": false,
+This project uses [react-native-config](https://github.com/luggit/react-native-config) to expose config variables to your javascript code in React Native. You can store API keys
+and other sensitive information in a `.env` file:
 
-    "meals": {
-      ".read": true
-    },
-
-    "recipes": {
-      ".read": true,
-    	".indexOn": ["category"]
-    },
-
-    "users": {
-      "$uid": {
-        ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid",
-
-        "firstName": { ".validate": "newData.isString() && newData.val().length > 0" },
-        "lastName": { ".validate": "newData.isString() && newData.val().length > 0" },
-        "lastLoggedIn": { ".validate": "newData.val() <= now" },
-        "signedUp": { ".validate": "newData.val() <= now" },
-        "role": {
-          ".validate": "(root.child('users/'+auth.uid+'/role').val() === 'admin' && newData.val() === 'admin') || newData.val() === 'user'"
-        }
-      }
-    },
-
-    "favourites": {
-    	"$uid": {
-      	".read": "auth != null && auth.uid == $uid",
-      	".write": "auth != null && auth.uid == $uid"
-    	}
-  	}
-  }
-}
+```
+API_URL=https://myapi.com
+GOOGLE_MAPS_API_KEY=abcdefgh
 ```
 
-Want to experiment even more with Firebase? Check out the [Firebase Cloud Functions](/docs/README.md)
+and access them from React Native like so:
 
----
+```
+import Secrets from 'react-native-config'
 
-## Understanding the File Structure
+Secrets.API_URL  // 'https://myapi.com'
+Secrets.GOOGLE_MAPS_API_KEY  // 'abcdefgh'
+```
 
-- `/android` - The native Android stuff
-- `/ios` - The native iOS stuff
-- `/src` - Contains the full React Native App codebase
-  - `/components` - 'Dumb-components' / presentational. [Read More &rarr;](/src/components/README.md)
-  - `/constants` - App-wide variables and config
-  - `/containers` - 'Smart-components' / the business logic. [Read More &rarr;](/src/containers/README.md)
-  - `/images` - Self explanatory right?
-  - `/lib` - Utils, custom libraries, functions
-  - `/navigation`- Routes - wire up the router with any & all screens. [Read More &rarr;](/src/navigation/README.md)
-  - `/redux` - Redux Reducers & Actions grouped by type. [Read More &rarr;](/src/redux/README.md)
-  - `/theme` - Theme specific styles and variables
+The `.env` file is ignored by git keeping those secrets out of your repo.
+
