@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginVertical: Metrics.section,
-    backgroundColor: Colors.panther
+    backgroundColor: Colors.clear
   },
   contentContainer: {
     alignSelf: 'center',
@@ -23,5 +23,12 @@ export default StyleSheet.create({
   },
   icon: {
     color: Colors.steel
+  },
+  textInput: {
+    backgroundColor: 'white',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    color: Colors.text
   }
 })
