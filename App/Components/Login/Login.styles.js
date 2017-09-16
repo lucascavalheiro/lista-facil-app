@@ -4,7 +4,8 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     justifyContent: 'center',
-    marginVertical: Metrics.section
+    marginVertical: Metrics.section,
+    backgroundColor: Colors.ice
   },
   contentContainer: {
     alignSelf: 'center',

@@ -6,7 +6,7 @@ import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 
 // Styles
-import styles from './Styles/RootContainerStyles'
+import styles from './RootContainerStyles'
 
 class RootContainer extends Component {
   componentDidMount () {
