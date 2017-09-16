@@ -3,9 +3,10 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     marginVertical: Metrics.section,
-    backgroundColor: Colors.ice
+    backgroundColor: Colors.panther
   },
   contentContainer: {
     alignSelf: 'center',
