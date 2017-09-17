@@ -4,30 +4,25 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: Metrics.statusBar,
     justifyContent: 'center',
-    marginVertical: Metrics.section,
-    backgroundColor: Colors.panther
   },
-  contentContainer: {
-    alignSelf: 'center',
-    alignItems: 'center'
-  },
-  message: {
-    marginTop: Metrics.baseMargin,
-    marginHorizontal: Metrics.baseMargin,
-    textAlign: 'center',
-    fontFamily: Fonts.type.base,
-    fontSize: Fonts.size.regular,
-    fontWeight: 'bold',
-    color: Colors.steel
-  },
-  icon: {
-    color: Colors.steel
+  loginBox: {
+    marginHorizontal: Metrics.doubleBaseMargin,
+    paddingVertical: Metrics.doubleBaseMargin,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: 4,
+    backgroundColor: Colors.secondary,
   },
   textInput: {
     backgroundColor: 'white',
     height: 40,
-    borderColor: 'gray',
+    borderColor: 'transparent',
     borderWidth: 1,
+    borderRadius: 4,
+    marginBottom: Metrics.doubleBaseMargin,
+    marginHorizontal: Metrics.doubleBaseMargin
   }
 })

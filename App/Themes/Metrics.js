@@ -29,7 +29,8 @@ const metrics = {
     medium: 40,
     large: 60,
     logo: 200
-  }
+  },
+  statusBar: 20,
 }
 
 export default metrics

@@ -3,10 +3,10 @@ import {
   View,
   TextInput,
   Button,
-  Alert,
 } from 'react-native'
 import { connect } from 'react-redux';
 import styles from './Login.styles.js'
+import { Colors } from '../../Themes/'
 
 import { onChangeEmail, onChangePassword } from './Login.actions';
 
@@ -28,36 +28,39 @@ class Login extends Component {
   }
 
   onLoginPress() {
-    Alert.alert('AE!');
+    this.props.navigation.navigate('Home');
   }
 
   render () {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          value={this.props.email}
-          onChangeText={this.onChangeEmail}
-          placeholder="youremail@email.com"
-        />
-        <TextInput
-          style={styles.textInput}
-          value={this.props.password}
-          onChangeText={this.onChangePassword}
-          secureTextEntry
-        />
-        <Button
-          title="LOGIN"
-          onPress={this.onLoginPress}
-        />
+        <View style={styles.loginBox}>
+          <TextInput
+            style={styles.textInput}
+            value={this.props.email}
+            onChangeText={this.onChangeEmail}
+            placeholder="me@email.com"
+          />
+          <TextInput
+            style={styles.textInput}
+            value={this.props.password}
+            onChangeText={this.onChangePassword}
+            secureTextEntry
+          />
+          <Button
+            title="LOGIN"
+            onPress={this.onLoginPress}
+            color={Colors.primary}
+          />
+        </View>
       </View>
     )
   }
 }
 
 const mapStateToProps = state => {
-  const { email } = state.login;
-  return { email };
+  const { email, password } = state.login;
+  return { email, password };
 }
 
 const mapDispatchToProps = dispatch => ({
