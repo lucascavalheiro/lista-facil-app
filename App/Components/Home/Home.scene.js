@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import {
   View,
   TextInput,
-  Button,
   Text,
   TouchableOpacity,
   Alert,
 } from 'react-native'
 import { connect } from 'react-redux';
-import styles from './Home.styles.js'
 
+
+import Button from '../Common/Button';
+import styles from './Home.styles.js'
 import {  } from './Home.actions';
 
 class Home extends Component {
@@ -22,15 +23,7 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.buttonContainer}
-              onPress={() => {Alert.alert('ae')}}
-            >
-              <View style={styles.button}>
-                <Text style={styles.text}>ADICIONAR</Text>
-              </View>
-            </TouchableOpacity>
+          <Button style={styles.buttonContainer}/>
         </View>
       </View>
     )

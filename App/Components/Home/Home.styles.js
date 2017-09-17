@@ -21,19 +21,7 @@ export default StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     bottom: -18,
-    right: Metrics.doubleBaseMargin
-  },
-  button: {
-    height: 36,
-    width: 'auto',
-    alignSelf: 'flex-start',
-    justifyContent: 'center',
-    paddingHorizontal: Metrics.doubleBaseMargin,
-    backgroundColor: Colors.primary,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    right: Metrics.doubleBaseMargin,
   },
   text: {
     alignSelf: 'center',
