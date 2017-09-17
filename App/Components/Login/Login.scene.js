@@ -6,8 +6,9 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux';
 import styles from './Login.styles.js'
-import { Colors } from '../../Themes/'
+import { Card } from 'react-native-material-design';
 
+import { Colors } from '../../Themes/'
 import { onChangeEmail, onChangePassword } from './Login.actions';
 
 class Login extends Component {
@@ -34,25 +35,29 @@ class Login extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={styles.loginBox}>
-          <TextInput
-            style={styles.textInput}
-            value={this.props.email}
-            onChangeText={this.onChangeEmail}
-            placeholder="me@email.com"
-          />
-          <TextInput
-            style={styles.textInput}
-            value={this.props.password}
-            onChangeText={this.onChangePassword}
-            secureTextEntry
-          />
-          <Button
-            title="LOGIN"
-            onPress={this.onLoginPress}
-            color={Colors.primary}
-          />
-        </View>
+        <Card>
+          <Card.Body>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={styles.textInput}
+                value={this.props.email}
+                onChangeText={this.onChangeEmail}
+                placeholder="me@email.com"
+              />
+              <TextInput
+                style={styles.textInput}
+                value={this.props.password}
+                onChangeText={this.onChangePassword}
+                secureTextEntry
+              />
+              <Button
+                title="LOGIN"
+                onPress={this.onLoginPress}
+                color={Colors.primary}
+              />
+            </View>
+          </Card.Body>
+        </Card>
       </View>
     )
   }
