@@ -14,4 +14,10 @@ export default StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
   },
+  text: {
+    alignSelf: 'center',
+    fontSize: 14,
+    color: Colors.snow,
+    fontWeight: 'bold',
+  }
 })

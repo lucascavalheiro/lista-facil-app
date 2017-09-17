@@ -22,11 +22,5 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: -18,
     right: Metrics.doubleBaseMargin,
-  },
-  text: {
-    alignSelf: 'center',
-    fontSize: 14,
-    color: Colors.snow,
-    fontWeight: 'bold',
   }
 })
