@@ -1,7 +1,6 @@
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
-  emphasis: 'HelveticaNeue-Italic'
+  base: 'Roboto-Regular',
+  bold: 'Roboto-Black'
 }
 
 const size = {
@@ -28,7 +27,7 @@ const style = {
     fontSize: size.h2
   },
   h3: {
-    fontFamily: type.emphasis,
+    fontFamily: type.bold,
     fontSize: size.h3
   },
   h4: {
@@ -40,7 +39,7 @@ const style = {
     fontSize: size.h5
   },
   h6: {
-    fontFamily: type.emphasis,
+    fontFamily: type.bold,
     fontSize: size.h6
   },
   normal: {
