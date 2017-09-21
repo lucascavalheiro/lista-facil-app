@@ -46,6 +46,7 @@ class Login extends Component {
             onChangeText={this.onChangeEmail}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            labelColor={Colors.white}
           />
           <TextField
             label={'Senha'}
@@ -53,6 +54,7 @@ class Login extends Component {
             onChangeText={this.onChangePassword}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            labelColor={Colors.white}
             secureTextEntry
           />
           <Button
