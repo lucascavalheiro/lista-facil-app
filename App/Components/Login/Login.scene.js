@@ -61,7 +61,6 @@ class Login extends Component {
             text="LOGIN"
             raised
             onPress={this.onLoginPress}
-            color={Colors.primary}
             style={{container: styles.button}}
           />
         </View>

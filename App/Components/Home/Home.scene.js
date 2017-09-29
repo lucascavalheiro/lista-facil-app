@@ -5,11 +5,12 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  Picker,
 } from 'react-native'
+import { Button } from 'react-native-material-ui'
+import { Colors } from '../../Themes/'
 import { connect } from 'react-redux';
 
-
-import Button from '../Common/Button';
 import styles from './Home.styles.js'
 import {  } from './Home.actions';
 
@@ -23,8 +24,20 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Button style={styles.buttonContainer}/>
+
+        <Picker
+          mode='dropdown'
+          style={styles.select}>
+          <Picker.Item label="Churrasco" value="Churrasco" />
+          <Picker.Item label="Recorrente" value="Recorrente" />
+        </Picker>
         </View>
+        <Button
+          text="ADICIONAR"
+          raised
+          onPress={this.addItem}
+          style={{container: styles.button, text: styles.buttonText}}
+        />
       </View>
     )
   }
