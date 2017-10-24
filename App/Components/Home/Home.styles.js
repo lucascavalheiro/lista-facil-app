@@ -14,19 +14,20 @@ export default StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     position: 'relative',
+    paddingTop: Metrics.marginVertical,
+    paddingHorizontal: Metrics.marginHorizontal
   },
-  select: {
+  listNameContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  listName: {
     color: Colors.white,
-    width: 160
+    fontSize: 16,
+    fontWeight: '600'
   },
-  button: {
-    position: 'absolute',
-    top: 210,
-    backgroundColor: Colors.primary,
-    right: Metrics.doubleBaseMargin,
-    width: 120
+  listArrow: {
+    color: Colors.white,
+    marginLeft: Metrics.smallMargin
   },
-  buttonText: {
-    color: Colors.white
-  }
 })

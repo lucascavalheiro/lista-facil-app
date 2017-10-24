@@ -3,23 +3,12 @@ const images = {
   logo: require('../Images/logo_text.png'),
   clearLogo: require('../Images/logo_icon.png'),
   launch: require('../Images/logo_icon.png'),
-  ready: require('../Images/your-app.png'),
-  ignite: require('../Images/ignite_logo.png'),
-  igniteClear: require('../Images/ignite-logo-transparent.png'),
-  tileBg: require('../Images/tile_bg.png'),
-  background: require('../Images/BG.png'),
-  buttonBackground: require('../Images/button-bg.png'),
-  api: require('../Images/Icons/icon-api-testing.png'),
-  components: require('../Images/Icons/icon-components.png'),
-  deviceInfo: require('../Images/Icons/icon-device-information.png'),
-  faq: require('../Images/Icons/faq-icon.png'),
-  home: require('../Images/Icons/icon-home.png'),
-  theme: require('../Images/Icons/icon-theme.png'),
-  usageExamples: require('../Images/Icons/icon-usage-examples.png'),
-  chevronRight: require('../Images/Icons/chevron-right.png'),
-  hamburger: require('../Images/Icons/hamburger.png'),
-  backButton: require('../Images/Icons/back-button.png'),
-  closeButton: require('../Images/Icons/close-button.png')
+  iconAdd: require('../Images/Icons/icon_add.png'),
+  iconDragHandle: require('../Images/Icons/icon_drag_handle.png'),
+  iconHistory: require('../Images/Icons/icon_history.png'),
+  iconMore: require('../Images/Icons/icon_more.png'),
+  iconPersonPlus: require('../Images/Icons/icon_person_plus.png'),
+  iconPersonPlusLight: require('../Images/Icons/icon_person_plus_light.png')
 }
 
 export default images

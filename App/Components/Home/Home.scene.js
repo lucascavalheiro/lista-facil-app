@@ -17,27 +17,17 @@ import {  } from './Home.actions';
 class Home extends Component {
   constructor(props) {
     super(props);
-
   }
 
   render () {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-
-        <Picker
-          mode='dropdown'
-          style={styles.select}>
-          <Picker.Item label="Churrasco" value="Churrasco" />
-          <Picker.Item label="Recorrente" value="Recorrente" />
-        </Picker>
+          <View style={styles.listNameContainer}>
+            <Text style={styles.listName}>Apartamento</Text>
+            <Text style={styles.listArrow}>▼</Text>
+          </View>
         </View>
-        <Button
-          text="ADICIONAR"
-          raised
-          onPress={this.addItem}
-          style={{container: styles.button, text: styles.buttonText}}
-        />
       </View>
     )
   }
