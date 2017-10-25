@@ -21,12 +21,16 @@ class Items extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
-        <ActionButton />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+          />
+        </View>
+        <View style={styles.addButtonContainer}>
+          <ActionButton style={{ container: styles.addButton }} />
+        </View>
       </View>
     )
   }
