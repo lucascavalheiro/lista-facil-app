@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.secondary,
-    height: 230,
+    height: 100,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
@@ -17,17 +17,29 @@ export default StyleSheet.create({
     paddingTop: Metrics.marginVertical,
     paddingHorizontal: Metrics.marginHorizontal
   },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    marginBottom: Metrics.marginVertical
+  },
   listNameContainer: {
     flex: 1,
     flexDirection: 'row'
   },
   listName: {
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600'
   },
   listArrow: {
     color: Colors.white,
     marginLeft: Metrics.smallMargin
   },
+  tabBarText: {
+    fontSize: 16
+  },
+  tabBarUnderline: {
+    backgroundColor: Colors.primary
+  }
 })
