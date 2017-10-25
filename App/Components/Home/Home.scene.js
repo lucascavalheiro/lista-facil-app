@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
+  ScrollView,
   TextInput,
   Text,
   TouchableOpacity,
@@ -10,6 +11,8 @@ import {
 import { Colors, Images } from '../../Themes/'
 import { connect } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+
+import Items from '../Items/Items.scene';
 
 import styles from './Home.styles.js'
 import {  } from './Home.actions';
@@ -40,12 +43,12 @@ class Home extends Component {
           tabBarInactiveTextColor={Colors.blueLight}
           tabBarTextStyle={styles.tabBarText}
           tabBarUnderlineStyle={styles.tabBarUnderline}>
-          <View style={styles.container} tabLabel='ITENS'>
+          <ScrollView tabLabel='ITENS'>
+            <Items />
+          </ScrollView>
+          <ScrollView tabLabel='DESPESAS'>
             <Text>TESTE</Text>
-          </View>
-          <View style={styles.container} tabLabel='DIVISÃO'>
-            <Text>TESTE</Text>
-          </View>
+          </ScrollView>
         </ScrollableTabView>
       </View>
     )
