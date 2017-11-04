@@ -4,10 +4,13 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    padding: Metrics.marginVertical
+  },
+  topContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: Metrics.marginVertical
+    justifyContent: 'center'
   },
   inputContainer: {
     flex: 5,
