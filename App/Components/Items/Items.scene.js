@@ -11,21 +11,31 @@ import { ActionButton } from 'react-native-material-ui'
 import { Colors, Images } from '../../Themes/'
 
 class Items extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: ''
-    }
+  state = {
+    itemName: '',
+    quantity: '1'
   }
 
   render () {
+    const { itemName, quantity } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
-            style={styles.input}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}
+            style={styles.inputQuantity}
+            onChangeText={(quantity) => this.setState({quantity})}
+            value={quantity}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            autoCorrect={false}
+            keyboardType = 'numeric'
+          />
+          <TextInput
+            style={styles.inputItem}
+            onChangeText={(itemName) => this.setState({itemName})}
+            value={itemName}
+            placeholder='Nome do item'
+            underlineColorAndroid='rgba(0,0,0,0)'
+            autoCorrect={false}
           />
         </View>
         <View style={styles.addButtonContainer}>

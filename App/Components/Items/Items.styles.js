@@ -12,14 +12,29 @@ export default StyleSheet.create({
   inputContainer: {
     flex: 5,
     justifyContent: 'center',
+    flexDirection: 'row',
     height: 56
   },
-  input: {
+  inputQuantity: {
+    flex: 1,
     height: 56,
     borderColor: Colors.secondary,
     borderWidth: 1,
     borderRadius: 3,
-    marginRight: Metrics.marginHorizontal
+    marginRight: Metrics.baseMargin,
+    fontSize: 18,
+    textAlign: 'center',
+    padding: Metrics.baseMargin
+  },
+  inputItem: {
+    flex: 5,
+    height: 56,
+    borderColor: Colors.secondary,
+    borderWidth: 1,
+    borderRadius: 3,
+    marginRight: Metrics.baseMargin,
+    fontSize: 18,
+    padding: Metrics.baseMargin
   },
   addButtonContainer: {
     flex: 1,
