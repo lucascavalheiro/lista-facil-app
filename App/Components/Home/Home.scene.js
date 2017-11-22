@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import Items from '../Items/Items.scene';
+import Expenses from '../Expenses/Expenses.scene';
 
 import styles from './Home.styles.js'
 import {  } from './Home.actions';
@@ -47,7 +48,7 @@ class Home extends Component {
             <Items />
           </ScrollView>
           <ScrollView tabLabel='DESPESAS'>
-            <Text>TESTE</Text>
+            <Expenses />
           </ScrollView>
         </ScrollableTabView>
       </View>

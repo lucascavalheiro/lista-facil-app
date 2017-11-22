@@ -53,5 +53,29 @@ export default StyleSheet.create({
     marginRight: -20,
     width: 56,
     height: 56,
+  },
+  owner: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  totalBalanceContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft: 20
+  },
+  totalBalance: {
+    marginTop: 5
+  },
+  oweContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  youOwe: {
+    color: Colors.red
+  },
+  oweYou: {
+    color: Colors.green
   }
 })
