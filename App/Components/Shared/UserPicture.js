@@ -7,11 +7,11 @@ import styles from './UserPicture.styles.js'
 
 class UserPicture extends Component {
   render () {
-    const { size } = this.props
+    const { size, userPicture } = this.props
 
     return (
       <Image
-        source={{uri: 'https://www.wpclipart.com/signs_symbol/icons_oversized/male_user_icon.png'}}
+        source={{uri: userPicture}}
         resizeMode='contain'
         style={[
           styles.iconPerson,
@@ -23,7 +23,8 @@ class UserPicture extends Component {
 }
 
 UserPicture.propTypes = {
-  size: PropTypes.number
+  size: PropTypes.number,
+  userPicture: PropTypes.string
 }
 
 export default UserPicture

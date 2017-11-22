@@ -73,9 +73,14 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   youOwe: {
-    color: Colors.red
+    color: Colors.red,
+    fontWeight: '500'
   },
   oweYou: {
-    color: Colors.green
+    color: Colors.green,
+    fontWeight: '500'
+  },
+  usersContainer: {
+    flex: 1,
   }
 })

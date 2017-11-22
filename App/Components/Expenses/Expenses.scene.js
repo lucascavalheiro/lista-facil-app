@@ -10,8 +10,14 @@ import { connect } from 'react-redux'
 import { ActionButton } from 'react-native-material-ui'
 import { Colors, Images } from '../../Themes/'
 import UserPicture from '../Shared/UserPicture'
+import UserBalance from '../Shared/UserBalance'
 
 import styles from './Expenses.styles.js'
+
+const users = [
+  {name: 'Marcela Alcântara', userPicture: 'http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'},
+  {name: 'Pedro José Silva', userPicture: 'http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'}
+]
 
 class Expenses extends Component {
   state = {
@@ -40,7 +46,10 @@ class Expenses extends Component {
         <View>
           <ScrollView style={styles.balanceContainer}>
             <View style={styles.owner}>
-              <UserPicture size={50} />
+              <UserPicture
+                userPicture='http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'
+                size={50}
+              />
               <View style={styles.totalBalanceContainer}>
                 <Text style={styles.totalBalance}>Balanço total</Text>
                 <View style={styles.oweContainer}>
@@ -52,6 +61,11 @@ class Expenses extends Component {
                   </View>}
                 </View>
               </View>
+            </View>
+            <View style={styles.usersContainer}>
+              {users.map((user, i) =>
+                <UserBalance user={user} key={i} />
+              )}
             </View>
           </ScrollView>
         </View>
