@@ -16,11 +16,11 @@ export default StyleSheet.create({
     flex: 5,
     justifyContent: 'center',
     flexDirection: 'row',
-    height: 56
+    height: 46
   },
   inputQuantity: {
     flex: 1,
-    height: 56,
+    height: 46,
     borderColor: Colors.secondary,
     borderWidth: 1,
     borderRadius: 3,
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   },
   inputItem: {
     flex: 5,
-    height: 56,
+    height: 46,
     borderColor: Colors.secondary,
     borderWidth: 1,
     borderRadius: 3,
@@ -42,8 +42,8 @@ export default StyleSheet.create({
   addButtonContainer: {
     flex: 1,
     justifyContent: 'center',
-    width: 56,
-    height: 56,
+    width: 46,
+    height: 46,
     marginTop: Metrics.doubleBaseMargin,
 
   },
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     flex: 0,
     backgroundColor: Colors.primary,
     marginRight: -20,
-    width: 56,
-    height: 56,
+    width: 46,
+    height: 46,
   }
 })
