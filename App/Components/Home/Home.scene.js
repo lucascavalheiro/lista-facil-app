@@ -8,31 +8,58 @@ import {
   Image,
   Picker,
 } from 'react-native'
-import { Colors, Images } from '../../Themes/'
+import { Colors, Images } from '../../Themes/';
 import { connect } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import Items from '../Items/Items.scene';
 import Expenses from '../Expenses/Expenses.scene';
+import DropdownModal from '../Shared/DropdownModal';
 
-import styles from './Home.styles.js'
+import styles from './Home.styles.js';
 import {  } from './Home.actions';
 
+const lists = [
+  'Apartamento',
+  'Recorrente',
+  'Churrasco da firma'
+]
+
 class Home extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    openDropdownModal: false,
+    dropdownList: [],
+    dropdownPosition: 'left'
+  }
+
+  openDropdownModal = (items, position) => {
+    this.setState({
+      openDropdownModal: true,
+      dropdownList: items,
+      dropdownPosition: position
+    })
+  }
+
+  onCloseDropdown = () => {
+    this.setState({
+      openDropdownModal: false
+    })
   }
 
   render () {
+    const { openDropdownModal, dropdownList, dropdownPosition } = this.state
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <View style={styles.listNameContainer}>
+            <TouchableOpacity style={styles.listNameContainer} onPress={() => this.openDropdownModal(lists, 'left')}>
               <Text style={styles.listName}>Apartamento</Text>
               <Text style={styles.listArrow}>▼</Text>
-            </View>
-            <Image source={Images.iconMore} style={styles.iconMore} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.openDropdownModal(['Listas', 'Configurações', 'Sair da conta'], 'right')}>
+              <Image source={Images.iconMore} style={styles.iconMore} />
+            </TouchableOpacity>
           </View>
           <View style={styles.usersList}>
             <Image source={Images.iconPersonPlusLight} style={styles.iconPersonPlusLight} />
@@ -51,6 +78,14 @@ class Home extends Component {
             <Expenses />
           </ScrollView>
         </ScrollableTabView>
+
+        {openDropdownModal &&
+          <DropdownModal
+            list={dropdownList}
+            position={dropdownPosition}
+            onClose={this.onCloseDropdown}
+          />
+        }
       </View>
     )
   }
