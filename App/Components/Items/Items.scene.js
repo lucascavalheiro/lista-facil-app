@@ -11,15 +11,17 @@ import { Colors, Images } from '../../Themes/'
 
 import styles from './Items.styles.js'
 import Item from '../Shared/Item'
+import ItemModal from '../Shared/ItemModal'
 
 class Items extends Component {
   state = {
+    openItemModal: true,
     itemName: '',
     quantity: '1'
   }
 
   render () {
-    const { itemName, quantity } = this.state
+    const { openItemModal, itemName, quantity } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -51,6 +53,13 @@ class Items extends Component {
             <Item />
           </ScrollView>
         </View>
+
+        {openItemModal &&
+          <ItemModal
+            item={{quantity: '2', name: 'cacho de banana nanica'}}
+            onClose={this.onCloseLists}
+          />
+        }
       </View>
     )
   }

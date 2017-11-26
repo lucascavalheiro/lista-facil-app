@@ -4,6 +4,7 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    height: Metrics.screenHeight - 180,
     padding: Metrics.marginVertical
   },
   topContainer: {

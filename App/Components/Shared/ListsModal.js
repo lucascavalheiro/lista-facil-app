@@ -6,7 +6,7 @@ import { Button } from 'react-native-material-ui'
 
 import styles from './ListsModal.styles.js'
 
-class Lists extends Component {
+class ListsModal extends Component {
 
   render () {
     const { list, position, onClose, onItemClick, onCreateList } = this.props
@@ -34,10 +34,10 @@ class Lists extends Component {
   }
 }
 
-Lists.propTypes = {
+ListsModal.propTypes = {
   list: PropTypes.arrayOf(PropTypes.string),
   onCreateList: PropTypes.func,
   onClose: PropTypes.func
 }
 
-export default Lists
+export default ListsModal
