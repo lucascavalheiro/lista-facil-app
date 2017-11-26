@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { View, Image } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import { Colors, Images } from '../../Themes/'
@@ -6,15 +6,17 @@ import { Colors, Images } from '../../Themes/'
 import styles from './Item.styles.js'
 
 
-export default class Item extends Component {
+class Item extends Component {
   render () {
+    const { item, onCheckItem } = this.props
+
     return (
       <View style={styles.container}>
         <CheckBox
             style={{flex: 1, padding: 10}}
-            onClick={()=>console.log('clicked')}
-            isChecked={true}
-            rightText='Nome do item'
+            onClick={onCheckItem}
+            isChecked={false}
+            rightText={item.name}
             rightTextStyle={{color: Colors.black}}
             checkBoxColor={Colors.gray}
         />
@@ -23,3 +25,10 @@ export default class Item extends Component {
     )
   }
 }
+
+Item.propTypes = {
+  item: PropTypes.object,
+  onCheckItem: PropTypes.func
+}
+
+export default Item

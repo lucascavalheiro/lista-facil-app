@@ -8,10 +8,10 @@ export default StyleSheet.create({
     padding: Metrics.marginVertical
   },
   topContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
   },
   inputContainer: {
     flex: 5,

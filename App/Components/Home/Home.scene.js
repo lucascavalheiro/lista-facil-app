@@ -30,7 +30,7 @@ const lists = [
 
 class Home extends Component {
   state = {
-    openListsModal: true,
+    openListsModal: false,
     openDropdownModal: false,
     dropdownList: [],
     dropdownPosition: 'left'

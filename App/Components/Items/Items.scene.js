@@ -15,29 +15,41 @@ import ItemModal from '../Shared/ItemModal'
 
 class Items extends Component {
   state = {
-    openItemModal: true,
-    itemName: '',
-    quantity: '1'
+    isItemModalOpen: false,
+    newItemName: '',
+    newItemQuantity: '1'
+  }
+
+  openItemModal = () => {
+    this.setState({ isItemModalOpen: true })
+  }
+
+  onCheckItemCancel = () => {
+    this.setState({ isItemModalOpen: false })
+  }
+
+  onItemConclude = () => {
+    this.setState({ isItemModalOpen: false })
   }
 
   render () {
-    const { openItemModal, itemName, quantity } = this.state
+    const { isItemModalOpen, newItemName, newItemQuantity } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputQuantity}
-              onChangeText={(quantity) => this.setState({quantity})}
-              value={quantity}
+              onChangeText={(newItemQuantity) => this.setState({newItemQuantity})}
+              value={newItemQuantity}
               underlineColorAndroid='rgba(0,0,0,0)'
               autoCorrect={false}
               keyboardType = 'numeric'
             />
             <TextInput
               style={styles.inputItem}
-              onChangeText={(itemName) => this.setState({itemName})}
-              value={itemName}
+              onChangeText={(newItemName) => this.setState({newItemName})}
+              value={newItemName}
               placeholder='Nome do item'
               underlineColorAndroid='rgba(0,0,0,0)'
               autoCorrect={false}
@@ -49,15 +61,18 @@ class Items extends Component {
         </View>
         <View>
           <ScrollView>
-            <Item />
-            <Item />
+            <Item
+              item={{quantity: '2', name: 'cacho de banana nanica'}}
+              onCheckItem={this.openItemModal}
+            />
           </ScrollView>
         </View>
 
-        {openItemModal &&
+        {isItemModalOpen &&
           <ItemModal
             item={{quantity: '2', name: 'cacho de banana nanica'}}
-            onClose={this.onCloseLists}
+            onClose={this.onCheckItemCancel}
+            onItemConclude={this.onItemConclude}
           />
         }
       </View>
