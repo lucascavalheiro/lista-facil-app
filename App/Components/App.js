@@ -12,7 +12,8 @@ const store = createStore()
 
 const uiTheme = {
     palette: {
-        primaryColor: Colors.primaryColor,
+        primaryColor: Colors.primary,
+        accentColor: Colors.accent,
     },
     toolbar: {
         container: {

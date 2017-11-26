@@ -21,7 +21,7 @@ export default StyleSheet.create({
   inputQuantity: {
     flex: 1,
     height: 46,
-    borderColor: Colors.secondary,
+    borderColor: Colors.primary,
     borderWidth: 1,
     borderRadius: 3,
     marginRight: Metrics.baseMargin,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
   inputItem: {
     flex: 5,
     height: 46,
-    borderColor: Colors.secondary,
+    borderColor: Colors.primary,
     borderWidth: 1,
     borderRadius: 3,
     marginRight: Metrics.baseMargin,
@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   addButton: {
     flex: 0,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.accent,
     marginRight: -20,
     width: 46,
     height: 46,

@@ -20,7 +20,7 @@ export default StyleSheet.create({
     elevation: 20
   },
   item: {
-    color: Colors.secondary,
+    color: Colors.primary,
     fontSize: Fonts.size.regular,
     fontWeight: '500',
     lineHeight: 50,

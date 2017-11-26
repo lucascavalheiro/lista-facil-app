@@ -5,6 +5,7 @@ const type = {
 
 const size = {
   input: 18,
+  big: 22,
   regular: 17,
   medium: 14,
   small: 12,

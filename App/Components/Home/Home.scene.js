@@ -15,6 +15,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Items from '../Items/Items.scene';
 import Expenses from '../Expenses/Expenses.scene';
 import DropdownModal from '../Shared/DropdownModal';
+import Lists from '../Shared/ListsModal';
 
 import styles from './Home.styles.js';
 import {  } from './Home.actions';
@@ -22,11 +23,14 @@ import {  } from './Home.actions';
 const lists = [
   'Apartamento',
   'Recorrente',
-  'Churrasco da firma'
+  'Churrasco da firma',
+  'Trabalho',
+  'Apto 92',
 ]
 
 class Home extends Component {
   state = {
+    openListsModal: true,
     openDropdownModal: false,
     dropdownList: [],
     dropdownPosition: 'left'
@@ -46,8 +50,14 @@ class Home extends Component {
     })
   }
 
+  onCloseLists = () => {
+    this.setState({
+      openListsModal: false
+    })
+  }
+
   render () {
-    const { openDropdownModal, dropdownList, dropdownPosition } = this.state
+    const { openListsModal, openDropdownModal, dropdownList, dropdownPosition } = this.state
 
     return (
       <View style={styles.container}>
@@ -66,7 +76,7 @@ class Home extends Component {
           </View>
         </View>
         <ScrollableTabView
-          tabBarBackgroundColor={Colors.secondary}
+          tabBarBackgroundColor={Colors.primary}
           tabBarActiveTextColor={Colors.white}
           tabBarInactiveTextColor={Colors.blueLight}
           tabBarTextStyle={styles.tabBarText}
@@ -84,6 +94,13 @@ class Home extends Component {
             list={dropdownList}
             position={dropdownPosition}
             onClose={this.onCloseDropdown}
+          />
+        }
+
+        {openListsModal &&
+          <Lists
+            list={lists}
+            onClose={this.onCloseLists}
           />
         }
       </View>

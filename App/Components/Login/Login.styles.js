@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingTop: Metrics.statusBar,
     justifyContent: 'center',
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     paddingBottom: Metrics.doubleBaseMargin,
     paddingHorizontal: Metrics.doubleBaseMargin
   },

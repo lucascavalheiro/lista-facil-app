@@ -7,7 +7,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   header: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     height: 100,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -40,6 +40,6 @@ export default StyleSheet.create({
     fontSize: 16
   },
   tabBarUnderline: {
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.accent
   }
 })
