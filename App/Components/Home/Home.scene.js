@@ -16,6 +16,7 @@ import Items from '../Items/Items.scene';
 import Expenses from '../Expenses/Expenses.scene';
 import DropdownModal from '../Shared/DropdownModal';
 import Lists from '../Shared/ListsModal';
+import NewUserModal from '../Shared/NewUserModal';
 
 import styles from './Home.styles.js';
 import {  } from './Home.actions';
@@ -30,34 +31,39 @@ const lists = [
 
 class Home extends Component {
   state = {
-    openListsModal: false,
-    openDropdownModal: false,
+    isListsModalOpen: false,
+    isDropdownModalOpen: false,
+    isNewUserModalOpen: false,
     dropdownList: [],
     dropdownPosition: 'left'
   }
 
   openDropdownModal = (items, position) => {
     this.setState({
-      openDropdownModal: true,
+      isDropdownModalOpen: true,
       dropdownList: items,
       dropdownPosition: position
     })
   }
 
+  toggleNewUserModal = (open) => {
+    this.setState({ isNewUserModalOpen: open })
+  }
+
   onCloseDropdown = () => {
     this.setState({
-      openDropdownModal: false
+      isDropdownModalOpen: false
     })
   }
 
   onCloseLists = () => {
     this.setState({
-      openListsModal: false
+      isListsModalOpen: false
     })
   }
 
   render () {
-    const { openListsModal, openDropdownModal, dropdownList, dropdownPosition } = this.state
+    const { isListsModalOpen, isDropdownModalOpen, isNewUserModalOpen, dropdownList, dropdownPosition } = this.state
 
     return (
       <View style={styles.container}>
@@ -72,7 +78,9 @@ class Home extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.usersList}>
-            <Image source={Images.iconPersonPlusLight} style={styles.iconPersonPlusLight} />
+            <TouchableOpacity onPress={() => this.toggleNewUserModal(true)}>
+              <Image source={Images.iconPersonPlusLight} style={styles.iconPersonPlusLight} />
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollableTabView
@@ -89,7 +97,7 @@ class Home extends Component {
           </ScrollView>
         </ScrollableTabView>
 
-        {openDropdownModal &&
+        {isDropdownModalOpen &&
           <DropdownModal
             list={dropdownList}
             position={dropdownPosition}
@@ -97,10 +105,17 @@ class Home extends Component {
           />
         }
 
-        {openListsModal &&
+        {isListsModalOpen &&
           <Lists
             list={lists}
             onClose={this.onCloseLists}
+          />
+        }
+
+        {isNewUserModalOpen &&
+          <NewUserModal
+            list={lists}
+            onClose={() => this.toggleNewUserModal(false)}
           />
         }
       </View>

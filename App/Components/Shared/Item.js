@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, Image } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import { Colors, Images } from '../../Themes/'
