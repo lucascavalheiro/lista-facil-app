@@ -11,6 +11,7 @@ import { ActionButton } from 'react-native-material-ui'
 import { Colors, Images } from '../../Themes/'
 import UserPicture from '../Shared/UserPicture'
 import UserBalance from '../Shared/UserBalance'
+import { Button } from 'react-native-material-ui'
 
 import styles from './Expenses.styles.js'
 
@@ -22,6 +23,10 @@ const users = [
 class Expenses extends Component {
   state = {
     expenseValue: '',
+  }
+
+  onSettleUp = () => {
+    console.log('settle up');
   }
 
   render () {
@@ -68,6 +73,19 @@ class Expenses extends Component {
               )}
             </View>
           </ScrollView>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.total}>
+            <Text style={styles.totalSpendingTitle}>Total gasto por todos</Text>
+            <Text style={styles.totalSpending}>R$146,00</Text>
+          </View>
+          <Button
+            text='Quitar'
+            primary
+            raised
+            style={{ container: styles.settleUp }}
+            onPress={this.onSettleUp}
+          />
         </View>
       </View>
     )

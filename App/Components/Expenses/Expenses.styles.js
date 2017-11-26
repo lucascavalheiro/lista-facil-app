@@ -4,13 +4,14 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    height: Metrics.screenHeight - 170,
     padding: Metrics.marginVertical
   },
   topContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
   },
   inputContainer: {
     flex: 5,
@@ -82,5 +83,26 @@ export default StyleSheet.create({
   },
   usersContainer: {
     flex: 1,
-  }
+  },
+  bottomContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 70,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: Colors.white
+  },
+  total: {
+    flex: 2
+  },
+  totalSpending: {
+    color: Colors.primary,
+    fontWeight: '600'
+  },
+  settleUp: {
+    flex: 1
+  },
 })
