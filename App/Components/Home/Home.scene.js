@@ -11,6 +11,7 @@ import {
 import { Colors, Images } from '../../Themes/';
 import { connect } from 'react-redux';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import firebase from 'react-native-firebase'
 
 import Items from '../Items/Items.scene';
 import Expenses from '../Expenses/Expenses.scene';
@@ -29,13 +30,20 @@ const lists = [
   'Apto 92',
 ]
 
+const user = {}
+
 class Home extends Component {
   state = {
     isListsModalOpen: false,
     isDropdownModalOpen: false,
     isNewUserModalOpen: false,
     dropdownList: [],
-    dropdownPosition: 'left'
+    dropdownPosition: 'left',
+  }
+
+  componentDidMount() {
+    user = firebase.auth().currentUser
+    console.log('user just logged in ', user);
   }
 
   openDropdownModal = (items, position) => {

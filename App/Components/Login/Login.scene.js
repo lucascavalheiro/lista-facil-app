@@ -31,7 +31,6 @@ class Login extends Component {
       this.setState({ user })
     })
 
-    console.log('user ', this.state.user)
     if (this.state.user) {
       this.props.navigation.navigate('Home')
     }
@@ -53,7 +52,8 @@ class Login extends Component {
 
   onLoginPress = () => {
     this.setState({ loading: true })
-    firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
+    // firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
+    firebase.auth().signInWithEmailAndPassword('phillipeframos@gmail.com', 'p670rto')
       .then((user) => {
         console.log('User successfully logged in', user)
         this.props.navigation.navigate('Home')
@@ -103,7 +103,7 @@ class Login extends Component {
           <Button
             text="ENTRAR"
             raised
-            disabled={this.props.email === '' || this.props.password === ''}
+            disabled={!this.props.email === '' || !this.props.password === ''}
             onPress={this.onLoginPress}
             style={{container: styles.button}}
           />

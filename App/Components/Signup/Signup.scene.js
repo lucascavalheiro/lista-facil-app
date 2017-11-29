@@ -26,17 +26,6 @@ class Signup extends Component {
     }
   }
 
-  componentDidMount() {
-    this.unsubscriber = firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ user })
-    })
-
-    console.log('user ', this.state.user)
-    if (this.state.user) {
-      this.props.navigation.navigate('Home')
-    }
-  }
-
   componentWillUnmount() {
     if (this.unsubscriber) {
       this.unsubscriber()
@@ -57,10 +46,23 @@ class Signup extends Component {
 
   onSignupPress = () => {
     this.setState({ loading: true })
-    firebase.auth().createUserWithEmailAndPassword(this.props.newEmail, this.props.newPassword)
+
+    const userName = this.props.name
+    const userEmail = this.props.newEmail
+    const userPassword = this.props.newPassword
+    const { navigate } = this.props.navigation
+
+    firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
       .then((user) => {
-        console.log('User successfully created', user)
-        this.props.navigation.navigate('Home')
+        user.updateProfile({
+          displayName: userName,
+          photoURL: "https://lh6.googleusercontent.com/-fxGs1Fc8XXM/AAAAAAAAAAI/AAAAAAAAaxQ/nsscCqlX3rw/photo.jpg?sz=64"
+        }).then(function() {
+          console.log('User successfully created ', user)
+          navigate('Home')
+        }).catch(function(error) {
+          console.log('user update error ', error);
+        })
         this.setState({ loading: false })
       })
       .catch((err) => {
@@ -142,8 +144,8 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => {
-  const { newEmail, newPassword } = state.signup
-  return { newEmail, newPassword }
+  const { name, newEmail, newPassword } = state.signup
+  return { name, newEmail, newPassword }
 }
 
 const mapDispatchToProps = dispatch => ({
