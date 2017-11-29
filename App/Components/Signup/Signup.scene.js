@@ -4,7 +4,8 @@ import {
   TextInput,
   Image,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import styles from './Signup.styles.js'
@@ -13,7 +14,7 @@ import TextField from 'react-native-md-textinput'
 import firebase from 'react-native-firebase'
 
 import { Colors, Images } from '../../Themes/'
-import { onChangeName, onChangeNewEmail, onChangeNewPassword } from './Signup.actions'
+import { onChangePicture, onChangeName, onChangeNewEmail, onChangeNewPassword } from './Signup.actions'
 
 class Signup extends Component {
   constructor(props) {
@@ -30,6 +31,11 @@ class Signup extends Component {
     if (this.unsubscriber) {
       this.unsubscriber()
     }
+  }
+
+  onChangePicture = (picture) => {
+    console.log('change picture')
+    // this.props.onChangePicture(picture)
   }
 
   onChangeName = (name) => {
@@ -79,7 +85,9 @@ class Signup extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={Images.logo} />
+          <TouchableOpacity onPress={this.onChangePicture}>
+            <Image style={styles.logo} source={Images.iconAddPicture} />
+          </TouchableOpacity>
         </View>
         {this.state.signupError &&
           <View style={styles.signupErrorContainer}>

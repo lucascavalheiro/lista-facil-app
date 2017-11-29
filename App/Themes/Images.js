@@ -4,6 +4,7 @@ const images = {
   clearLogo: require('../Images/logo_icon.png'),
   launch: require('../Images/logo_icon.png'),
   iconAdd: require('../Images/Icons/icon_add.png'),
+  iconAddPicture: require('../Images/Icons/icon_add_picture.png'),
   iconDragHandle: require('../Images/Icons/icon_drag_handle.png'),
   iconHistory: require('../Images/Icons/icon_history.png'),
   iconMore: require('../Images/Icons/icon_more.png'),
