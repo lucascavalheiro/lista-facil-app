@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import {
   View,
   TextInput,
-  Image
+  Image,
+  Text,
+  ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
 import styles from './Login.styles.js'
 import { Button } from 'react-native-material-ui'
 import TextField from 'react-native-md-textinput'
+import firebase from 'react-native-firebase'
 
 import { Colors, Images } from '../../Themes/'
 import { onChangeEmail, onChangePassword } from './Login.actions'
@@ -15,22 +18,51 @@ import { onChangeEmail, onChangePassword } from './Login.actions'
 class Login extends Component {
   constructor(props) {
     super(props)
-
-    this.onChangeEmail = this.onChangeEmail.bind(this)
-    this.onChangePassword = this.onChangePassword.bind(this)
-    this.onLoginPress = this.onLoginPress.bind(this)
+    this.unsubscriber = null
+    this.state = {
+      user: null,
+      loading: false,
+      loginError: null
+    }
   }
 
-  onChangeEmail(email) {
-    this.props.onChangeEmail(email)
+  componentDidMount() {
+    this.unsubscriber = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ user })
+    })
+
+    console.log('user ', this.state.user)
+    if (this.state.user) {
+      this.props.navigation.navigate('Home')
+    }
   }
 
-  onChangePassword(email) {
-    this.props.onChangePassword(email)
+  componentWillUnmount() {
+    if (this.unsubscriber) {
+      this.unsubscriber()
+    }
   }
 
-  onLoginPress() {
-    this.props.navigation.navigate('Home')
+  onChangeEmail = (email) => {
+    this.props.onChangeEmail(email.replace(/\s/g,''))
+  }
+
+  onChangePassword = (password) => {
+    this.props.onChangePassword(password.replace(/\s/g,''))
+  }
+
+  onLoginPress = () => {
+    this.setState({ loading: true })
+    firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
+      .then((user) => {
+        console.log('User successfully logged in', user)
+        this.props.navigation.navigate('Home')
+        this.setState({ loading: false })
+      })
+      .catch((err) => {
+        console.log('User signin error', err)
+        this.setState({ loading: false, loginError: err })
+      })
   }
 
   render () {
@@ -39,6 +71,13 @@ class Login extends Component {
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={Images.logo} />
         </View>
+        {this.state.loginError &&
+          <View style={styles.loginErrorContainer}>
+            <Text style={styles.loginError}>
+              Usuário ou senha incorretos
+            </Text>
+          </View>
+        }
         <View style={styles.loginBox}>
           <TextField
             label={'Email'}
@@ -60,10 +99,22 @@ class Login extends Component {
           <Button
             text="LOGIN"
             raised
+            disabled={this.props.email === '' || this.props.password === ''}
             onPress={this.onLoginPress}
             style={{container: styles.button}}
           />
         </View>
+
+        {this.state.loading &&
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              animating={this.state.loading}
+              size="large"
+              style={styles.loading}
+              color={Colors.white}
+            />
+          </View>
+        }
       </View>
     )
   }

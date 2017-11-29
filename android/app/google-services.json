@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "625629782914",
+    "firebase_url": "https://lista-facil-51ef9.firebaseio.com",
+    "project_id": "lista-facil-51ef9",
+    "storage_bucket": "lista-facil-51ef9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625629782914:android:186d596d85e00fab",
+        "android_client_info": {
+          "package_name": "com.phillfer.listafacil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625629782914-q875qf7vgqgjavejlnaeu4i7fjnfv5rh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.phillfer.listafacil",
+            "certificate_hash": "c5c3961ad027ddb5e517b99bde9124d85eff9f2f"
+          }
+        },
+        {
+          "client_id": "625629782914-hf4p5g0gc0ogc4u00l245184s1ipj14m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzud6r_nx7B18DzAKVvM4C4Mqqr8KSf9s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625629782914-hf4p5g0gc0ogc4u00l245184s1ipj14m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

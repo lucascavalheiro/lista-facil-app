@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "apisauce": "^0.14.0",
+    "firebase": "^4.6.2",
     "format-json": "^1.0.3",
     "lodash": "^4.17.2",
     "prop-types": "^15.5.10",
@@ -36,6 +37,7 @@
     "react-native-check-box": "^2.0.2",
     "react-native-config": "^0.6.0",
     "react-native-drawer": "^2.3.0",
+    "react-native-firebase": "^3.1.1",
     "react-native-material-ui": "^1.13.0",
     "react-native-md-textinput": "^2.0.4",
     "react-native-scrollable-tab-view": "^0.8.0",
@@ -46,7 +48,8 @@
     "redux-persist": "^4.1.0",
     "redux-saga": "^0.15.6",
     "reduxsauce": "0.4.1",
-    "seamless-immutable": "^7.0.1"
+    "seamless-immutable": "^7.0.1",
+    "wedeploy": "^4.1.1"
   },
   "devDependencies": {
     "@storybook/addon-storyshots": "^3.2.3",

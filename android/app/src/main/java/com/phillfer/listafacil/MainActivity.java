@@ -1,4 +1,4 @@
-package com.listafacil;
+package com.phillfer.listafacil;
 
 import com.facebook.react.ReactActivity;
 

@@ -15,11 +15,32 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  loginErrorContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  loginError: {
+    fontSize: Fonts.size.regular,
+    fontWeight: '600',
+    color: Colors.red
+  },
   loginBox: {
     flex: 3,
     marginVertical: Metrics.doubleBaseMargin
   },
   button: {
     marginVertical: Metrics.doubleSection
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loading: {
+    height: 80
   }
 })
