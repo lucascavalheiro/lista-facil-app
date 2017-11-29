@@ -15,6 +15,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  userPicture: {
+    height: 100,
+    width: 100,
+    borderRadius: 100
+  },
   signupErrorContainer: {
     alignItems: 'center',
     justifyContent: 'flex-end'

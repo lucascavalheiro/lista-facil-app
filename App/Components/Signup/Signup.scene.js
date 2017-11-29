@@ -11,6 +11,8 @@ import { connect } from 'react-redux'
 import styles from './Signup.styles.js'
 import { Button } from 'react-native-material-ui'
 import TextField from 'react-native-md-textinput'
+import RNFetchBlob from 'react-native-fetch-blob'
+import ImagePicker from 'react-native-image-crop-picker'
 import firebase from 'react-native-firebase'
 
 import { Colors, Images } from '../../Themes/'
@@ -34,8 +36,25 @@ class Signup extends Component {
   }
 
   onChangePicture = (picture) => {
-    console.log('change picture')
-    // this.props.onChangePicture(picture)
+    this.setState({ loading: true })
+    const Blob = RNFetchBlob.polyfill.Blob
+    const fs = RNFetchBlob.fs
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+    window.Blob = Blob
+
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      cropping: true,
+      mediaType: 'photo'
+    }).then(image => {
+      this.props.onChangePicture({uri: image.path, width: image.width, height: image.height, mime: image.mime})
+      this.setState({ loading: false })
+    })
+    .catch((error) => {
+      console.log(error)
+      this.setState({ loading: false })
+    })
   }
 
   onChangeName = (name) => {
@@ -58,23 +77,34 @@ class Signup extends Component {
     const userPassword = this.props.newPassword
     const { navigate } = this.props.navigation
 
-    firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
-      .then((user) => {
-        user.updateProfile({
-          displayName: userName,
-          photoURL: "https://lh6.googleusercontent.com/-fxGs1Fc8XXM/AAAAAAAAAAI/AAAAAAAAaxQ/nsscCqlX3rw/photo.jpg?sz=64"
-        }).then(function() {
-          console.log('User successfully created ', user)
-          navigate('Home')
-        }).catch(function(error) {
-          console.log('user update error ', error);
+    firebase.storage()
+        .ref('pictures/' + userEmail + '.jpg')
+        .putFile(this.props.picture.uri)
+        .then(uploadedFile => {
+          console.log('uploadedFile ', uploadedFile)
+          firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
+            .then((user) => {
+              user.updateProfile({
+                displayName: userName,
+                photoURL: uploadedFile.downloadURL
+              }).then(function() {
+                console.log('User successfully created ', user)
+                navigate('Home')
+              }).catch(function(error) {
+                console.log('user update error ', error);
+              })
+              this.setState({ loading: false })
+            })
+            .catch((err) => {
+              console.log('User signin error', err)
+              this.setState({ loading: false, signupError: err })
+            })
         })
-        this.setState({ loading: false })
-      })
-      .catch((err) => {
-        console.log('User signin error', err)
-        this.setState({ loading: false, signupError: err })
-      })
+        .catch(err => {
+          console.log('error uploading photo ', err);
+        })
+
+
   }
 
   onLoginPress = () => {
@@ -86,7 +116,7 @@ class Signup extends Component {
       <View style={styles.container}>
         <View style={styles.logoContainer}>
           <TouchableOpacity onPress={this.onChangePicture}>
-            <Image style={styles.logo} source={Images.iconAddPicture} />
+            <Image style={styles.userPicture} source={this.props.picture ? this.props.picture : Images.iconAddPicture} />
           </TouchableOpacity>
         </View>
         {this.state.signupError &&
@@ -125,7 +155,12 @@ class Signup extends Component {
           <Button
             text="CRIAR CONTA"
             raised
-            disabled={this.props.name === '' || this.props.newEmail === '' || this.props.newPassword === ''}
+            disabled={
+              this.props.name === '' ||
+              this.props.newEmail === '' ||
+              this.props.newPassword === '' ||
+              this.props.picture === ''
+            }
             onPress={this.onSignupPress}
             style={{container: styles.button}}
           />
@@ -152,11 +187,14 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => {
-  const { name, newEmail, newPassword } = state.signup
-  return { name, newEmail, newPassword }
+  const { picture, name, newEmail, newPassword } = state.signup
+  return { picture, name, newEmail, newPassword }
 }
 
 const mapDispatchToProps = dispatch => ({
+  onChangePicture: (picture) => {
+    dispatch(onChangePicture(picture))
+  },
   onChangeName: (name) => {
     dispatch(onChangeName(name))
   },
