@@ -42,7 +42,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    user = firebase.auth().currentUser
+    user = firebase.auth().currentUser._user
     console.log('user just logged in ', user);
   }
 
@@ -81,7 +81,7 @@ class Home extends Component {
               <Text style={styles.listName}>Apartamento</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.openDropdownModal(['Listas', 'Configurações', 'Sair da conta'], 'right')}>
+            <TouchableOpacity onPress={() => this.openDropdownModal(['Listas', 'Sair da conta'], 'right')}>
               <Image source={Images.iconMore} style={styles.iconMore} />
             </TouchableOpacity>
           </View>
@@ -107,6 +107,7 @@ class Home extends Component {
 
         {isDropdownModalOpen &&
           <DropdownModal
+            user={user}
             list={dropdownList}
             position={dropdownPosition}
             onClose={this.onCloseDropdown}

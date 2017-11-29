@@ -15,14 +15,32 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     position: 'absolute',
     top: 20,
-    paddingLeft: 15,
     paddingBottom: 25,
     elevation: 20
+  },
+  userInfo: {
+    flex: 1,
+    alignItems: 'center',
+    width: 180,
+    height: 30,
+    paddingTop: 15,
+    paddingBottom: 40
+  },
+  userPicture: {
+    height: 25,
+    width: 25,
+    borderRadius: 25
+  },
+  userName: {
+    fontSize: Fonts.size.small,
+    fontWeight: '500',
+    lineHeight: 25,
   },
   item: {
     color: Colors.primary,
     fontSize: Fonts.size.regular,
     fontWeight: '500',
     lineHeight: 50,
+    paddingHorizontal: 15,
   }
 })
