@@ -11,22 +11,22 @@ export default StyleSheet.create({
     paddingHorizontal: Metrics.doubleBaseMargin
   },
   logoContainer: {
-    flex: 2,
+    flex: 1.5,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  loginErrorContainer: {
+  signupErrorContainer: {
     alignItems: 'center',
     justifyContent: 'flex-end'
   },
-  loginError: {
+  signupError: {
     fontSize: Fonts.size.regular,
     fontWeight: '600',
     color: Colors.red
   },
-  loginBox: {
+  signupBox: {
     flex: 3,
-    marginVertical: Metrics.doubleBaseMargin
+    marginTop: Metrics.baseMargin
   },
   button: {
     marginTop: Metrics.doubleSection
@@ -43,11 +43,11 @@ export default StyleSheet.create({
   loading: {
     height: 80
   },
-  buttonCreateAccount: {
+  buttonLogin: {
     alignSelf: 'flex-end',
-    marginTop: Metrics.doubleBaseMargin
+    marginTop: Metrics.baseMargin
   },
-  buttonCreateAccountText: {
+  buttonLoginText: {
     color: Colors.white
   }
 })

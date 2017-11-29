@@ -7,22 +7,22 @@ import {
   ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
-import styles from './Login.styles.js'
+import styles from './Signup.styles.js'
 import { Button } from 'react-native-material-ui'
 import TextField from 'react-native-md-textinput'
 import firebase from 'react-native-firebase'
 
 import { Colors, Images } from '../../Themes/'
-import { onChangeEmail, onChangePassword } from './Login.actions'
+import { onChangeName, onChangeNewEmail, onChangeNewPassword } from './Signup.actions'
 
-class Login extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props)
     this.unsubscriber = null
     this.state = {
       user: null,
       loading: false,
-      loginError: null
+      signupError: null
     }
   }
 
@@ -43,30 +43,34 @@ class Login extends Component {
     }
   }
 
-  onChangeEmail = (email) => {
-    this.props.onChangeEmail(email.replace(/\s/g,''))
+  onChangeName = (name) => {
+    this.props.onChangeName(name)
   }
 
-  onChangePassword = (password) => {
-    this.props.onChangePassword(password)
+  onChangeNewEmail = (email) => {
+    this.props.onChangeNewEmail(email.replace(/\s/g,''))
   }
 
-  onLoginPress = () => {
+  onChangeNewPassword = (password) => {
+    this.props.onChangeNewPassword(password)
+  }
+
+  onSignupPress = () => {
     this.setState({ loading: true })
-    firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
+    firebase.auth().createUserWithEmailAndPassword(this.props.newEmail, this.props.newPassword)
       .then((user) => {
-        console.log('User successfully logged in', user)
+        console.log('User successfully created', user)
         this.props.navigation.navigate('Home')
         this.setState({ loading: false })
       })
       .catch((err) => {
         console.log('User signin error', err)
-        this.setState({ loading: false, loginError: err })
+        this.setState({ loading: false, signupError: err })
       })
   }
 
-  onCreateAccountPress = () => {
-    this.props.navigation.navigate('Signup')
+  onLoginPress = () => {
+    this.props.navigation.navigate('Login')
   }
 
   render () {
@@ -75,42 +79,50 @@ class Login extends Component {
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={Images.logo} />
         </View>
-        {this.state.loginError &&
-          <View style={styles.loginErrorContainer}>
-            <Text style={styles.loginError}>
-              Usuário ou senha incorretos
+        {this.state.signupError &&
+          <View style={styles.signupErrorContainer}>
+            <Text style={styles.signupError}>
+              Email já está sendo usado
             </Text>
           </View>
         }
-        <View style={styles.loginBox}>
+        <View style={styles.signupBox}>
+          <TextField
+            label={'Nome'}
+            value={this.props.name}
+            onChangeText={this.onChangeName}
+            highlightColor={Colors.white}
+            textColor={Colors.white}
+            labelColor={Colors.white}
+          />
           <TextField
             label={'Email'}
-            value={this.props.email}
-            onChangeText={this.onChangeEmail}
+            value={this.props.newEmail}
+            onChangeText={this.onChangeNewEmail}
             highlightColor={Colors.white}
             textColor={Colors.white}
             labelColor={Colors.white}
           />
           <TextField
             label={'Senha'}
-            value={this.props.password}
-            onChangeText={this.onChangePassword}
+            value={this.props.newPassword}
+            onChangeText={this.onChangeNewPassword}
             highlightColor={Colors.white}
             textColor={Colors.white}
             labelColor={Colors.white}
             secureTextEntry
           />
           <Button
-            text="ENTRAR"
+            text="CRIAR CONTA"
             raised
-            disabled={this.props.email === '' || this.props.password === ''}
-            onPress={this.onLoginPress}
+            disabled={this.props.name === '' || this.props.newEmail === '' || this.props.newPassword === ''}
+            onPress={this.onSignupPress}
             style={{container: styles.button}}
           />
           <Button
-            text="CRIAR CONTA"
-            onPress={this.onCreateAccountPress}
-            style={{container: styles.buttonCreateAccount, text: styles.buttonCreateAccountText}}
+            text="FAZER LOGIN"
+            onPress={this.onLoginPress}
+            style={{container: styles.buttonLogin, text: styles.buttonLoginText}}
           />
         </View>
 
@@ -130,17 +142,20 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  const { email, password } = state.login
-  return { email, password }
+  const { newEmail, newPassword } = state.signup
+  return { newEmail, newPassword }
 }
 
 const mapDispatchToProps = dispatch => ({
-  onChangeEmail: (email) => {
-    dispatch(onChangeEmail(email))
+  onChangeName: (name) => {
+    dispatch(onChangeName(name))
   },
-  onChangePassword: (password) => {
-    dispatch(onChangePassword(password))
+  onChangeNewEmail: (email) => {
+    dispatch(onChangeNewEmail(email))
+  },
+  onChangeNewPassword: (password) => {
+    dispatch(onChangeNewPassword(password))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
