@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, TouchableHighlight, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { Images } from '../../Themes/'
 
 import styles from './DropdownModal.styles.js'
@@ -8,10 +8,10 @@ import styles from './DropdownModal.styles.js'
 class DropdownModal extends Component {
 
   render () {
-    const { user, list, position, onClose, onItemClick } = this.props
+    const { user, list, position, onClose, onItemPress } = this.props
 
     return (
-      <TouchableHighlight style={styles.background} onPress={onClose}>
+      <TouchableOpacity style={styles.background} onPress={onClose}>
         <View style={[styles.container, {[position]: 10}]}>
           {position === 'right' &&
             <View style={styles.userInfo}>
@@ -20,12 +20,12 @@ class DropdownModal extends Component {
             </View>
           }
           {list.map((item, i) =>
-            <TouchableHighlight key={i}>
+            <TouchableOpacity key={i} onPress={() => onItemPress(item)}>
               <Text style={styles.item}>{item}</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           )}
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
   }
 }
@@ -34,7 +34,8 @@ DropdownModal.propTypes = {
   user: PropTypes.object,
   list: PropTypes.arrayOf(PropTypes.string),
   position: PropTypes.string,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  onItemPress: PropTypes.func
 }
 
 export default DropdownModal

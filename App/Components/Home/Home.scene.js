@@ -8,19 +8,19 @@ import {
   Image,
   Picker,
 } from 'react-native'
-import { Colors, Images } from '../../Themes/';
-import { connect } from 'react-redux';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import { Colors, Images } from '../../Themes/'
+import { connect } from 'react-redux'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
 import firebase from 'react-native-firebase'
 
-import Items from '../Items/Items.scene';
-import Expenses from '../Expenses/Expenses.scene';
-import DropdownModal from '../Shared/DropdownModal';
-import Lists from '../Shared/ListsModal';
-import NewUserModal from '../Shared/NewUserModal';
+import Items from '../Items/Items.scene'
+import Expenses from '../Expenses/Expenses.scene'
+import DropdownModal from '../Shared/DropdownModal'
+import Lists from '../Shared/ListsModal'
+import NewUserModal from '../Shared/NewUserModal'
 
-import styles from './Home.styles.js';
-import {  } from './Home.actions';
+import styles from './Home.styles.js'
+import {  } from './Home.actions'
 
 const lists = [
   'Apartamento',
@@ -43,7 +43,7 @@ class Home extends Component {
 
   componentDidMount() {
     user = firebase.auth().currentUser._user
-    console.log('user just logged in ', user);
+    console.log('user just logged in ', user)
   }
 
   openDropdownModal = (items, position) => {
@@ -68,6 +68,24 @@ class Home extends Component {
     this.setState({
       isListsModalOpen: false
     })
+  }
+
+  onDropdownModalItemPress = (item) => {
+    console.log('item ', item)
+    switch (item) {
+      case 'Listas':
+
+        break
+      case 'Sair da conta':
+        firebase.auth().signOut()
+          .then(() => {
+            console.log('User signed out successfully')
+            this.props.navigation.navigate('Login')
+          }).catch()
+        break
+      default:
+        break
+    }
   }
 
   render () {
@@ -111,6 +129,7 @@ class Home extends Component {
             list={dropdownList}
             position={dropdownPosition}
             onClose={this.onCloseDropdown}
+            onItemPress={this.onDropdownModalItemPress}
           />
         }
 
@@ -133,11 +152,11 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {}
 }
 
 const mapDispatchToProps = dispatch => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
