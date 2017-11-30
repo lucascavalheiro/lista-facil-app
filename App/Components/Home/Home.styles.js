@@ -23,6 +23,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginBottom: Metrics.marginVertical
   },
+  iconMoreContainer: {
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 5,
+  },
   listNameContainer: {
     flex: 1,
     flexDirection: 'row'

@@ -38,12 +38,14 @@ export default StyleSheet.create({
   },
   loadingContainer: {
     position: 'absolute',
-    top: 50,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    paddingTop: 50,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)'
   },
   loading: {
     height: 80

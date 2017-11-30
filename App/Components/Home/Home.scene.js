@@ -71,10 +71,11 @@ class Home extends Component {
   }
 
   onDropdownModalItemPress = (item) => {
-    console.log('item ', item)
+    this.setState({ isDropdownModalOpen: false })
+
     switch (item) {
       case 'Listas':
-
+        this.setState({ isListsModalOpen: true })
         break
       case 'Sair da conta':
         firebase.auth().signOut()
@@ -95,11 +96,17 @@ class Home extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <TouchableOpacity style={styles.listNameContainer} onPress={() => this.openDropdownModal(lists, 'left')}>
+            <TouchableOpacity
+              onPress={() => this.openDropdownModal(lists, 'left')}
+              style={styles.listNameContainer}
+            >
               <Text style={styles.listName}>Apartamento</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.openDropdownModal(['Listas', 'Sair da conta'], 'right')}>
+            <TouchableOpacity
+              onPress={() => this.openDropdownModal(['Listas', 'Sair da conta'], 'right')}
+              style={styles.iconMoreContainer}
+            >
               <Image source={Images.iconMore} style={styles.iconMore} />
             </TouchableOpacity>
           </View>
