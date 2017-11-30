@@ -22,14 +22,7 @@ import NewUserModal from '../Shared/NewUserModal'
 import styles from './Home.styles.js'
 import {  } from './Home.actions'
 
-const lists = [
-  'Apartamento',
-  'Recorrente',
-  'Churrasco da firma',
-  'Trabalho',
-  'Apto 92',
-]
-
+const lists = []
 const user = {}
 
 class Home extends Component {
@@ -43,7 +36,34 @@ class Home extends Component {
 
   componentDidMount() {
     user = firebase.auth().currentUser._user
-    console.log('user just logged in ', user)
+    // console.log('user just logged in ', user)
+
+    const listIds = []
+    firebase.database().ref('lists/-L-CzZja83g52YGFSacM').on('value', function(snapshot) {
+      console.log('snap ', snapshot.val());
+    })
+    // firebase.database().ref('members/' + user.uid + '/lists').on('value', function(snapshot) {
+    //   listIds.push(snapshot.val())
+    //   console.log(listIds);
+    // });
+    // lists.push(snapshot.val())
+    // console.log('lists ', lists);
+
+    // const ref = firebase.database().ref('lists').push()
+    // const key = ref.key
+    //
+    // ref.set({id: key})
+    //   .then(() => {
+    //     console.log(key);
+    //   }).catch()
+    //
+    // firebase.database()
+    //   .ref('lists')
+    //   .set({
+    //     [key]: {
+    //       name: 'Nova Lista'
+    //     }
+    //   });
   }
 
   openDropdownModal = (items, position) => {
@@ -100,7 +120,7 @@ class Home extends Component {
               onPress={() => this.openDropdownModal(lists, 'left')}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>Apartamento</Text>
+              <Text style={styles.listName}>{lists[0]}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -142,6 +162,7 @@ class Home extends Component {
 
         {isListsModalOpen &&
           <Lists
+            user={user}
             list={lists}
             onClose={this.onCloseLists}
           />
