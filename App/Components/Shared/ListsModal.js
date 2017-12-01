@@ -10,19 +10,19 @@ import styles from './ListsModal.styles.js'
 class ListsModal extends Component {
   onCreateList = () => {
     const ref = firebase.database().ref('lists').push()
-    const key = ref.key
+    const listKey = ref.key
 
-    firebase.database()
-      .ref('lists')
-      .update({
-        [key]: {
-          name: 'Lista Nova',
-          owner: this.props.user.uid,
-          members: {
-            [this.props.user.uid]: true
-          }
-        }
-      });
+    firebase.database().ref('lists/' + listKey).update({
+      name: 'Firma',
+      owner: this.props.user.uid,
+      members: {
+        [this.props.user.uid]: true
+      }
+    })
+
+    firebase.database().ref('members/' + this.props.user.uid + '/lists').update({
+      [listKey]: true
+    })
   }
 
   render () {

@@ -29,9 +29,10 @@ class Home extends Component {
     isListsModalOpen: false,
     isDropdownModalOpen: false,
     isNewUserModalOpen: false,
-    dropdownList: [],
     dropdownPosition: 'left',
-    lists: []
+    dropdownList: [],
+    lists: [],
+    listsModalLists: []
   }
 
   componentDidMount() {
@@ -45,13 +46,9 @@ class Home extends Component {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           lists.push(snapshot.val())
           this.setState({ lists: lists })
-          console.log('lists ', lists)
         })
       })
     })
-
-    // lists.push(snapshot.val())
-    // console.log('lists ', lists);
   }
 
   openDropdownModal = (items, position) => {
@@ -59,6 +56,13 @@ class Home extends Component {
       isDropdownModalOpen: true,
       dropdownList: items,
       dropdownPosition: position
+    })
+  }
+
+  openListsModal = () => {
+    this.setState({
+      isListsModalOpen: true,
+      listsModalLists: this.state.lists
     })
   }
 
@@ -83,7 +87,7 @@ class Home extends Component {
 
     switch (item.name) {
       case 'Listas':
-        this.setState({ isListsModalOpen: true })
+        this.openListsModal()
         break
       case 'Sair da conta':
         firebase.auth().signOut()
@@ -104,7 +108,8 @@ class Home extends Component {
       isNewUserModalOpen,
       dropdownList,
       dropdownPosition,
-      lists
+      lists,
+      listsModalLists,
     } = this.state
 
     return (
@@ -158,7 +163,7 @@ class Home extends Component {
         {isListsModalOpen &&
           <Lists
             user={user}
-            lists={lists}
+            lists={listsModalLists}
             onClose={this.onCloseLists}
           />
         }
