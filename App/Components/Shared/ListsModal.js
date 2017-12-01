@@ -26,7 +26,7 @@ class ListsModal extends Component {
   }
 
   render () {
-    const { list, position, onClose, onItemClick, onCreateList } = this.props
+    const { lists, position, onClose, onItemClick, onCreateList } = this.props
 
     return (
       <TouchableHighlight style={styles.background} onPress={onClose}>
@@ -36,9 +36,9 @@ class ListsModal extends Component {
             <TouchableHighlight onPress={this.onCreateList}>
               <Text style={styles.newList}>NOVA LISTA</Text>
             </TouchableHighlight>
-            {list.map((item, i) =>
+            {lists.map((item, i) =>
               <TouchableHighlight key={i}>
-                <Text style={styles.item}>{item}</Text>
+                <Text style={styles.item}>{item.name}</Text>
               </TouchableHighlight>
             )}
           </ScrollView>
@@ -53,7 +53,7 @@ class ListsModal extends Component {
 
 ListsModal.propTypes = {
   user: PropTypes.object,
-  list: PropTypes.arrayOf(PropTypes.string),
+  lists: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func
 }
 

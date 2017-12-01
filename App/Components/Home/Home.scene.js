@@ -22,7 +22,6 @@ import NewUserModal from '../Shared/NewUserModal'
 import styles from './Home.styles.js'
 import {  } from './Home.actions'
 
-const lists = []
 const user = {}
 
 class Home extends Component {
@@ -32,28 +31,24 @@ class Home extends Component {
     isNewUserModalOpen: false,
     dropdownList: [],
     dropdownPosition: 'left',
-    currentList: {}
+    lists: []
   }
 
   componentDidMount() {
     user = firebase.auth().currentUser._user
     // console.log('user just logged in ', user)
-    let currentListUpdated = false
     let listIds = []
+    let lists = []
     firebase.database().ref('members/' + user.uid + '/lists').on('value', (snapshot) => {
       listIds = Object.keys(snapshot.val())
       listIds.forEach((id) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           lists.push(snapshot.val())
-          if (!currentListUpdated) {
-            this.setState({ currentList: lists[0] })
-            console.log('currentList ', lists[0])
-            console.log('snap ', this.state.currentList)
-            currentListUpdated = true
-          }
+          this.setState({ lists: lists })
+          console.log('lists ', lists)
         })
       })
-    });
+    })
 
     // lists.push(snapshot.val())
     // console.log('lists ', lists);
@@ -86,7 +81,7 @@ class Home extends Component {
   onDropdownModalItemPress = (item) => {
     this.setState({ isDropdownModalOpen: false })
 
-    switch (item) {
+    switch (item.name) {
       case 'Listas':
         this.setState({ isListsModalOpen: true })
         break
@@ -109,7 +104,7 @@ class Home extends Component {
       isNewUserModalOpen,
       dropdownList,
       dropdownPosition,
-      currentList
+      lists
     } = this.state
 
     return (
@@ -120,11 +115,11 @@ class Home extends Component {
               onPress={() => this.openDropdownModal(lists, 'left')}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>{currentList.name}</Text>
+              <Text style={styles.listName}>{lists[0] ? lists[0].name : ' '}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.openDropdownModal(['Listas', 'Sair da conta'], 'right')}
+              onPress={() => this.openDropdownModal([{name: 'Listas'}, {name: 'Sair da conta'}], 'right')}
               style={styles.iconMoreContainer}
             >
               <Image source={Images.iconMore} style={styles.iconMore} />
@@ -163,7 +158,7 @@ class Home extends Component {
         {isListsModalOpen &&
           <Lists
             user={user}
-            list={lists}
+            lists={lists}
             onClose={this.onCloseLists}
           />
         }

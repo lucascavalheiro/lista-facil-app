@@ -21,7 +21,7 @@ class DropdownModal extends Component {
           }
           {list.map((item, i) =>
             <TouchableOpacity key={i} onPress={() => onItemPress(item)}>
-              <Text style={styles.item}>{item}</Text>
+              <Text style={styles.item}>{item.name}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -32,7 +32,7 @@ class DropdownModal extends Component {
 
 DropdownModal.propTypes = {
   user: PropTypes.object,
-  list: PropTypes.arrayOf(PropTypes.string),
+  list: PropTypes.arrayOf(PropTypes.object),
   position: PropTypes.string,
   onClose: PropTypes.func,
   onItemPress: PropTypes.func
