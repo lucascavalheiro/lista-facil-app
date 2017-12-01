@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   View,
   TextInput,
@@ -20,6 +21,10 @@ class Items extends Component {
     newItemQuantity: '1'
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps ', nextProps);
+  }
+
   openItemModal = () => {
     this.setState({ isItemModalOpen: true })
   }
@@ -34,6 +39,8 @@ class Items extends Component {
 
   render () {
     const { isItemModalOpen, newItemName, newItemQuantity } = this.state
+    const { currentList } = this.props
+
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -78,6 +85,10 @@ class Items extends Component {
       </View>
     )
   }
+}
+
+Items.propTypes = {
+  currentList: PropTypes.object
 }
 
 const mapStateToProps = state => {

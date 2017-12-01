@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   View,
   ScrollView,
@@ -32,7 +33,8 @@ class Home extends Component {
     dropdownPosition: 'left',
     dropdownList: [],
     lists: [],
-    listsModalLists: []
+    listsModalLists: [],
+    currentList: {}
   }
 
   componentDidMount() {
@@ -45,7 +47,7 @@ class Home extends Component {
       listIds.forEach((id) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           lists.push(snapshot.val())
-          this.setState({ lists: lists })
+          this.setState({ lists: lists, currentList: lists[0] })
         })
       })
     })
@@ -110,6 +112,7 @@ class Home extends Component {
       dropdownPosition,
       lists,
       listsModalLists,
+      currentList
     } = this.state
 
     return (
@@ -120,7 +123,7 @@ class Home extends Component {
               onPress={() => this.openDropdownModal(lists, 'left')}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>{lists[0] ? lists[0].name : ' '}</Text>
+              <Text style={styles.listName}>{currentList ? currentList.name : ' '}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -143,7 +146,7 @@ class Home extends Component {
           tabBarTextStyle={styles.tabBarText}
           tabBarUnderlineStyle={styles.tabBarUnderline}>
           <ScrollView tabLabel='ITENS'>
-            <Items />
+            <Items currentList={currentList}  />
           </ScrollView>
           <ScrollView tabLabel='DESPESAS'>
             <Expenses />
