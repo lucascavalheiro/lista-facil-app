@@ -55,7 +55,7 @@ class Login extends Component {
     // firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
     firebase.auth().signInWithEmailAndPassword('phillipeframos@gmail.com', 'p670rto')
       .then((user) => {
-        console.log('User successfully logged in', user)
+        // console.log('User successfully logged in', user)
         this.props.navigation.navigate('Home')
         this.setState({ loading: false })
       })
