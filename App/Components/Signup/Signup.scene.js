@@ -88,7 +88,16 @@ class Signup extends Component {
                 displayName: userName,
                 photoURL: uploadedFile.downloadURL
               }).then(function() {
-                console.log('User successfully created ', user)
+                // console.log('User successfully created ', user)
+                const createdUser = user._auth._user._user
+                firebase.database()
+                  .ref('members/' + createdUser.uid)
+                  .set({
+                    name: createdUser.displayName,
+                    email: createdUser.email,
+                    photoURL: createdUser.photoURL
+                  })
+
                 navigate('Home')
               }).catch(function(error) {
                 console.log('user update error ', error);
