@@ -81,7 +81,7 @@ class Signup extends Component {
         .ref('pictures/' + userEmail + '.jpg')
         .putFile(this.props.picture.uri)
         .then(uploadedFile => {
-          console.log('uploadedFile ', uploadedFile)
+          // console.log('uploadedFile ', uploadedFile)
           firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
             .then((user) => {
               user.updateProfile({

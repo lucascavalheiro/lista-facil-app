@@ -9,7 +9,11 @@ import styles from './Item.styles.js'
 
 class Item extends Component {
   render () {
-    const { item, onCheckItem } = this.props
+    const { item, onCheckItem, hide } = this.props
+
+    if (hide) {
+      return null
+    }
 
     return (
       <View style={styles.container}>
@@ -29,6 +33,7 @@ class Item extends Component {
 
 Item.propTypes = {
   item: PropTypes.object,
+  hide: PropTypes.bool,
   onCheckItem: PropTypes.func
 }
 

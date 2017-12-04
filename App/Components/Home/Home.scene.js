@@ -47,7 +47,13 @@ class Home extends Component {
       listIds.forEach((id) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           lists.push(snapshot.val())
-          this.setState({ lists: lists, currentList: lists[0] })
+          this.setState({
+            lists: lists,
+            currentList: {
+              id: id,
+              info: lists[0]
+            }
+          })
         })
       })
     })
@@ -123,7 +129,7 @@ class Home extends Component {
               onPress={() => this.openDropdownModal(lists, 'left')}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>{currentList ? currentList.name : ' '}</Text>
+              <Text style={styles.listName}>{currentList.info ? currentList.info.name : ' '}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity

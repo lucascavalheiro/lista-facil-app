@@ -13,16 +13,22 @@ import { Colors, Images } from '../../Themes/'
 import styles from './Items.styles.js'
 import Item from '../Shared/Item'
 import ItemModal from '../Shared/ItemModal'
+import firebase from 'react-native-firebase'
 
 class Items extends Component {
   state = {
+    items: [],
     isItemModalOpen: false,
     newItemName: '',
     newItemQuantity: '1'
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps ', nextProps);
+    console.log('nextProps ', nextProps.currentList.id);
+
+    firebase.database().ref('items/' + nextProps.currentList.id).on('value', (snapshot) => {
+      this.setState({ items: snapshot.val() })
+    })
   }
 
   openItemModal = () => {
@@ -33,26 +39,47 @@ class Items extends Component {
     this.setState({ isItemModalOpen: false })
   }
 
-  onItemConclude = () => {
-    this.setState({ isItemModalOpen: false })
+
+  onItemCreate = () => {
+    const itemRef = firebase.database().ref().push()
+
+    firebase.database()
+      .ref('items/' + this.props.currentList.id)
+      .update({
+        [itemRef]: {
+          assigned: "",
+          completed: false,
+          name: this.state.newItemName
+        }
+      })
+  }
+
+  onItemConclude = (item) => {
+    firebase.database()
+      .ref('items/' + this.props.currentList.id + '/' + item)
+      .update({
+        completed: true
+      })
   }
 
   render () {
-    const { isItemModalOpen, newItemName, newItemQuantity } = this.state
+    const { isItemModalOpen, newItemName, items } = this.state
     const { currentList } = this.props
+
+
 
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.inputContainer}>
-            <TextInput
+            {false && <TextInput
               style={styles.inputQuantity}
               onChangeText={(newItemQuantity) => this.setState({newItemQuantity})}
               value={newItemQuantity}
               underlineColorAndroid='rgba(0,0,0,0)'
               autoCorrect={false}
               keyboardType = 'numeric'
-            />
+            />}
             <TextInput
               style={styles.inputItem}
               onChangeText={(newItemName) => this.setState({newItemName})}
@@ -63,15 +90,23 @@ class Items extends Component {
             />
           </View>
           <View style={styles.addButtonContainer}>
-            <ActionButton style={{ container: styles.addButton }} />
+            <ActionButton
+              onPress={this.onItemCreate}
+              disabled={newItemName === ''}
+              style={{ container: styles.addButton }}
+            />
           </View>
         </View>
         <View>
           <ScrollView>
-            <Item
-              item={{quantity: '2', name: 'cacho de banana nanica'}}
-              onCheckItem={this.openItemModal}
-            />
+            {items && Object.keys(items).map((item, i) =>
+              <Item
+                key={i}
+                item={{ name: items[item].name }}
+                hide={items[item].completed}
+                onCheckItem={() => this.onItemConclude(item)}
+              />
+            )}
           </ScrollView>
         </View>
 
