@@ -89,6 +89,8 @@ class Signup extends Component {
                 photoURL: uploadedFile.downloadURL
               }).then(function() {
                 // console.log('User successfully created ', user)
+
+                // Create member
                 const createdUser = user._auth._user._user
                 firebase.database()
                   .ref('members/' + createdUser.uid)
@@ -97,6 +99,20 @@ class Signup extends Component {
                     email: createdUser.email,
                     photoURL: createdUser.photoURL
                   })
+
+                // Create list
+                const ref = firebase.database().ref('lists').push()
+                const listKey = ref.key
+                firebase.database().ref('lists/' + listKey).update({
+                  name: 'Nova Lista',
+                  owner: createdUser.uid,
+                  members: {
+                    [createdUser.uid]: true
+                  }
+                })
+                firebase.database().ref('members/' + createdUser.uid + '/lists').update({
+                  [listKey]: true
+                })
 
                 navigate('Home')
               }).catch(function(error) {
