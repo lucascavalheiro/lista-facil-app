@@ -24,8 +24,6 @@ class Items extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps ', nextProps.currentList.id);
-
     firebase.database().ref('items/' + nextProps.currentList.id).on('value', (snapshot) => {
       this.setState({ items: snapshot.val() })
     })

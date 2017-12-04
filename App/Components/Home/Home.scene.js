@@ -17,6 +17,7 @@ import firebase from 'react-native-firebase'
 import Items from '../Items/Items.scene'
 import Expenses from '../Expenses/Expenses.scene'
 import DropdownModal from '../Shared/DropdownModal'
+import OptionsModal from '../Shared/OptionsModal'
 import Lists from '../Shared/ListsModal'
 import NewUserModal from '../Shared/NewUserModal'
 
@@ -28,9 +29,9 @@ const user = {}
 class Home extends Component {
   state = {
     isListsModalOpen: false,
+    isOptionsModalOpen: false,
     isDropdownModalOpen: false,
     isNewUserModalOpen: false,
-    dropdownPosition: 'left',
     dropdownList: [],
     lists: [],
     listsModalLists: [],
@@ -46,16 +47,22 @@ class Home extends Component {
       listIds = Object.keys(snapshot.val())
       listIds.forEach((id) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
-          lists.push(snapshot.val())
+          let list = snapshot.val()
+          list.id = id
+          lists.push(list)
           this.setState({
             lists: lists,
-            currentList: {
-              id: id,
-              info: lists[0]
-            }
+            currentList: lists[0]
           })
         })
       })
+    })
+  }
+
+  openOptionsModal = (items, position) => {
+    this.setState({
+      isOptionsModalOpen: true,
+      dropdownList: items,
     })
   }
 
@@ -63,7 +70,6 @@ class Home extends Component {
     this.setState({
       isDropdownModalOpen: true,
       dropdownList: items,
-      dropdownPosition: position
     })
   }
 
@@ -84,6 +90,12 @@ class Home extends Component {
     })
   }
 
+  onCloseOptions = () => {
+    this.setState({
+      isOptionsModalOpen: false
+    })
+  }
+
   onCloseLists = () => {
     this.setState({
       isListsModalOpen: false
@@ -91,7 +103,16 @@ class Home extends Component {
   }
 
   onDropdownModalItemPress = (item) => {
-    this.setState({ isDropdownModalOpen: false })
+    const index = this.state.lists.findIndex(x => x.id == item.id)
+
+    this.setState({
+      isDropdownModalOpen: false,
+      currentList: this.state.lists[index]
+    })
+  }
+
+  onOptionsPress = (item) => {
+    this.setState({ isOptionsModalOpen: false })
 
     switch (item.name) {
       case 'Listas':
@@ -100,7 +121,7 @@ class Home extends Component {
       case 'Sair da conta':
         firebase.auth().signOut()
           .then(() => {
-            console.log('User signed out successfully')
+            // console.log('User signed out successfully')
             this.props.navigation.navigate('Login')
           }).catch()
         break
@@ -113,6 +134,7 @@ class Home extends Component {
     const {
       isListsModalOpen,
       isDropdownModalOpen,
+      isOptionsModalOpen,
       isNewUserModalOpen,
       dropdownList,
       dropdownPosition,
@@ -129,11 +151,11 @@ class Home extends Component {
               onPress={() => this.openDropdownModal(lists, 'left')}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>{currentList.info ? currentList.info.name : ' '}</Text>
+              <Text style={styles.listName}>{currentList ? currentList.name : ' '}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.openDropdownModal([{name: 'Listas'}, {name: 'Sair da conta'}], 'right')}
+              onPress={() => this.openOptionsModal([{name: 'Listas'}, {name: 'Sair da conta'}], 'right')}
               style={styles.iconMoreContainer}
             >
               <Image source={Images.iconMore} style={styles.iconMore} />
@@ -161,11 +183,18 @@ class Home extends Component {
 
         {isDropdownModalOpen &&
           <DropdownModal
-            user={user}
             list={dropdownList}
-            position={dropdownPosition}
             onClose={this.onCloseDropdown}
             onItemPress={this.onDropdownModalItemPress}
+          />
+        }
+
+        {isOptionsModalOpen &&
+          <OptionsModal
+            user={user}
+            list={dropdownList}
+            onClose={this.onCloseOptions}
+            onOptionsPress={this.onOptionsPress}
           />
         }
 

@@ -3,18 +3,22 @@ import PropTypes from 'prop-types'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { Images } from '../../Themes/'
 
-import styles from './DropdownModal.styles.js'
+import styles from './OptionsModal.styles.js'
 
-class DropdownModal extends Component {
+class OptionsModal extends Component {
 
   render () {
-    const { user, list, onClose, onItemPress } = this.props
+    const { user, list, onClose, onOptionsPress } = this.props
 
     return (
       <TouchableOpacity style={styles.background} onPress={onClose}>
         <View style={styles.container}>
+          <View style={styles.userInfo}>
+            <Image source={{uri: user.photoURL}} style={styles.userPicture}/>
+            <Text style={styles.userName}>{user.displayName}</Text>
+          </View>
           {list.map((item, i) =>
-            <TouchableOpacity key={i} onPress={() => onItemPress(item)}>
+            <TouchableOpacity key={i} onPress={() => onOptionsPress(item)}>
               <Text style={styles.item}>{item.name}</Text>
             </TouchableOpacity>
           )}
@@ -24,11 +28,11 @@ class DropdownModal extends Component {
   }
 }
 
-DropdownModal.propTypes = {
+OptionsModal.propTypes = {
   user: PropTypes.object,
   list: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func,
-  onItemPress: PropTypes.func
+  onOptionsPress: PropTypes.func
 }
 
-export default DropdownModal
+export default OptionsModal

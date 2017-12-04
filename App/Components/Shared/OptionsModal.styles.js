@@ -14,7 +14,7 @@ export default StyleSheet.create({
     width: 180,
     backgroundColor: Colors.white,
     position: 'absolute',
-    left: 10,
+    right: 10,
     top: 20,
     paddingBottom: 25,
     elevation: 20
