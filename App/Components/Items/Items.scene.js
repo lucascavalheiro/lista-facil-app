@@ -50,6 +50,8 @@ class Items extends Component {
           name: this.state.newItemName
         }
       })
+
+    this.setState({ newItemName: '' })
   }
 
   onItemConclude = (item) => {
