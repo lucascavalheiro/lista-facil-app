@@ -23,6 +23,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginBottom: Metrics.marginVertical
   },
+  usersList: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 25
+  },
+  userPhoto: {
+    marginLeft: 15,
+    height: 25,
+    width: 25,
+    borderRadius: 25
+  },
   iconMoreContainer: {
     width: 50,
     justifyContent: 'center',

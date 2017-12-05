@@ -43,10 +43,12 @@ class NewUserModal extends Component {
                   .update({
                       [member]: true
                   })
+
+                this.setState({ errorMessage: '' })
+                this.props.onClose()
               }
             })
           })
-          this.setState({ errorMessage: '' })
         }
       });
   }
@@ -78,6 +80,7 @@ class NewUserModal extends Component {
             <Button
               text='Convidar'
               accent
+              disabled={!userEmail}
               onPress={this.onInviteUser}
               style={{ container: styles.actionButton }}
             />

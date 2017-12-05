@@ -35,7 +35,8 @@ class Home extends Component {
     dropdownList: [],
     lists: [],
     listsModalLists: [],
-    currentList: {}
+    currentList: {},
+    members: []
   }
 
   componentDidMount() {
@@ -53,6 +54,22 @@ class Home extends Component {
           this.setState({
             lists: lists,
             currentList: lists[0]
+          })
+
+          this.loadListMembers()
+        })
+      })
+    })
+  }
+
+  loadListMembers = () => {
+    let membersList = []
+    firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
+      Object.keys(snapshot.val()).map((memberId) => {
+        firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
+          membersList.push(snapshot.val())
+          this.setState({
+            members: membersList
           })
         })
       })
@@ -109,6 +126,8 @@ class Home extends Component {
       isDropdownModalOpen: false,
       currentList: this.state.lists[index]
     })
+
+    this.loadListMembers()
   }
 
   onOptionsPress = (item) => {
@@ -139,6 +158,7 @@ class Home extends Component {
       dropdownList,
       dropdownPosition,
       lists,
+      members,
       listsModalLists,
       currentList
     } = this.state
@@ -165,6 +185,9 @@ class Home extends Component {
             <TouchableOpacity onPress={() => this.toggleNewUserModal(true)}>
               <Image source={Images.iconPersonPlusLight} style={styles.iconPersonPlusLight} />
             </TouchableOpacity>
+            {members && members.map((member, i) =>
+              <Image key={i} source={{uri: member.photoURL}} style={styles.userPhoto} />
+            )}
           </View>
         </View>
         <ScrollableTabView
