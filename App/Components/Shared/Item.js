@@ -1,15 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Image } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import CheckBox from 'react-native-check-box'
 import { Colors, Images } from '../../Themes/'
+import firebase from 'react-native-firebase'
 
 import styles from './Item.styles.js'
 
 
 class Item extends Component {
+  state = {
+    memberPhoto: ''
+  }
+
+  componentDidMount() {
+    firebase.database().ref('items/' + this.props.currentListId).on('value', (snapshot) => {
+      firebase.database().ref('members').on('value', (snapshot) => {
+        Object.keys(snapshot.val()).map((member, i) => {
+          if (this.props.item.assigned != '' && snapshot.val()[member].email === this.props.item.assigned) {
+            this.setState({ memberPhoto: snapshot.val()[member].photoURL })
+          }
+        })
+      })
+    })
+  }
+
   render () {
-    const { item, onCheckItem, hide } = this.props
+    const { memberPhoto } = this.state
+    const { item, onCheckItem, hide, onAssignPress } = this.props
 
     if (hide) {
       return null
@@ -25,7 +43,12 @@ class Item extends Component {
             rightTextStyle={{color: Colors.black}}
             checkBoxColor={Colors.gray}
         />
-        <Image source={Images.iconPersonPlus} />
+        <TouchableOpacity onPress={() => onAssignPress(item)}>
+          <Image
+            style={styles.photo}
+            source={memberPhoto ? {uri: memberPhoto} : Images.iconPersonPlus}
+          />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -34,7 +57,9 @@ class Item extends Component {
 Item.propTypes = {
   item: PropTypes.object,
   hide: PropTypes.bool,
-  onCheckItem: PropTypes.func
+  onCheckItem: PropTypes.func,
+  onAssignPress: PropTypes.func,
+  currentListId: PropTypes.string,
 }
 
 export default Item

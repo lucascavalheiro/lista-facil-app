@@ -29,7 +29,6 @@ class NewUserModal extends Component {
             let user = {}
             Object.keys(snapshot.val()).map((member, i) => {
               if (snapshot.val()[member].email === invitedEmail) {
-                console.log(snapshot.val()[member]);
                 user = snapshot.val()[member]
 
                 firebase.database()

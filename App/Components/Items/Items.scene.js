@@ -12,15 +12,17 @@ import { Colors, Images } from '../../Themes/'
 
 import styles from './Items.styles.js'
 import Item from '../Shared/Item'
-import ItemModal from '../Shared/ItemModal'
+import UsersAssignModal from '../Shared/UsersAssignModal'
 import firebase from 'react-native-firebase'
 
 class Items extends Component {
   state = {
     items: [],
     isItemModalOpen: false,
+    isUsersModalOpen: false,
     newItemName: '',
-    newItemQuantity: '1'
+    newItemQuantity: '1',
+    itemId: ''
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,11 +63,34 @@ class Items extends Component {
       })
   }
 
+  onAssignPress = (item) => {
+    this.setState({
+      itemId: item,
+      isUsersModalOpen: true
+    })
+  }
+
+  onCloseUsersModal = () => {
+    this.setState({
+      isUsersModalOpen: false
+    })
+  }
+
+  onUserAssign = (userEmail) => {
+    firebase.database()
+      .ref('items/' + this.props.currentList.id + '/' + this.state.itemId)
+      .update({
+        assigned: userEmail
+      })
+
+    this.setState({
+      isUsersModalOpen: false,
+    })
+  }
+
   render () {
-    const { isItemModalOpen, newItemName, items } = this.state
-    const { currentList } = this.props
-
-
+    const { isItemModalOpen, isUsersModalOpen, newItemName, items, itemId } = this.state
+    const { currentList, members } = this.props
 
     return (
       <View style={styles.container}>
@@ -101,19 +126,22 @@ class Items extends Component {
             {items && Object.keys(items).map((item, i) =>
               <Item
                 key={i}
-                item={{ name: items[item].name }}
+                currentListId={currentList.id}
+                item={items[item]}
                 hide={items[item].completed}
                 onCheckItem={() => this.onItemConclude(item)}
+                onAssignPress={() => this.onAssignPress(item)}
               />
             )}
           </ScrollView>
         </View>
 
-        {isItemModalOpen &&
-          <ItemModal
-            item={{quantity: '2', name: 'cacho de banana nanica'}}
-            onClose={this.onCheckItemCancel}
-            onItemConclude={this.onItemConclude}
+        {isUsersModalOpen &&
+          <UsersAssignModal
+            item={itemId}
+            members={members}
+            onClose={this.onCloseUsersModal}
+            onUserAssign={this.onUserAssign}
           />
         }
       </View>
@@ -122,7 +150,8 @@ class Items extends Component {
 }
 
 Items.propTypes = {
-  currentList: PropTypes.object
+  currentList: PropTypes.object,
+  members: PropTypes.arrayOf(PropTypes.object)
 }
 
 const mapStateToProps = state => {

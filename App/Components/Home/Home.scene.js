@@ -197,7 +197,7 @@ class Home extends Component {
           tabBarTextStyle={styles.tabBarText}
           tabBarUnderlineStyle={styles.tabBarUnderline}>
           <ScrollView tabLabel='ITENS'>
-            <Items currentList={currentList}  />
+            <Items currentList={currentList} members={members} />
           </ScrollView>
           <ScrollView tabLabel='DESPESAS'>
             <Expenses />

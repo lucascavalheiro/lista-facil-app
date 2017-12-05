@@ -8,5 +8,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginLeft: -10
+  },
+  photo: {
+    height: 25,
+    width: 25,
+    borderRadius: 25
   }
 })
