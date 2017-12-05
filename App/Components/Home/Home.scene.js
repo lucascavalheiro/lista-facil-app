@@ -18,7 +18,7 @@ import Items from '../Items/Items.scene'
 import Expenses from '../Expenses/Expenses.scene'
 import DropdownModal from '../Shared/DropdownModal'
 import OptionsModal from '../Shared/OptionsModal'
-import Lists from '../Shared/ListsModal'
+import ListsModal from '../Shared/ListsModal'
 import NewUserModal from '../Shared/NewUserModal'
 
 import styles from './Home.styles.js'
@@ -44,10 +44,10 @@ class Home extends Component {
     // console.log('user just logged in ', user)
     let listIds = []
     let lists = []
-    firebase.database().ref('members/' + user.uid + '/lists').on('value', (snapshot) => {
+    firebase.database().ref('members/' + user.uid + '/lists').once('value', (snapshot) => {
       listIds = Object.keys(snapshot.val())
       listIds.forEach((id) => {
-        firebase.database().ref('lists/' + id).on('value', (snapshot) => {
+        firebase.database().ref('lists/' + id).once('value', (snapshot) => {
           let list = snapshot.val()
           list.id = id
           lists.push(list)
@@ -56,10 +56,25 @@ class Home extends Component {
             currentList: lists[0]
           })
 
+          this.loadLists()
           this.loadListMembers()
         })
       })
     })
+  }
+
+  loadLists = () => {
+    // let membersList = []
+    // firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
+    //   Object.keys(snapshot.val()).map((memberId) => {
+    //     firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
+    //       membersList.push(snapshot.val())
+    //       this.setState({
+    //         members: membersList
+    //       })
+    //     })
+    //   })
+    // })
   }
 
   loadListMembers = () => {
@@ -222,7 +237,7 @@ class Home extends Component {
         }
 
         {isListsModalOpen &&
-          <Lists
+          <ListsModal
             user={user}
             lists={listsModalLists}
             onClose={this.onCloseLists}

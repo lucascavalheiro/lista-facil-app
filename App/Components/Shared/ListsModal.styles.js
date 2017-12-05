@@ -20,7 +20,7 @@ export default StyleSheet.create({
     elevation: 20
   },
   lists: {
-    paddingBottom: 10,
+    paddingBottom: 50,
   },
   title: {
     color: Colors.primary,
@@ -36,6 +36,7 @@ export default StyleSheet.create({
     lineHeight: 50,
   },
   item: {
+    width: Metrics.screenWidth - 170,
     color: Colors.primary,
     fontSize: Fonts.size.regular,
     fontWeight: '500',
