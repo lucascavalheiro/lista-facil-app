@@ -8,16 +8,51 @@ import {
   TextInput
 } from 'react-native'
 import { Button } from 'react-native-material-ui'
+import firebase from 'react-native-firebase'
 
 import styles from './NewUserModal.styles.js'
 
 class NewUserModal extends Component {
   state = {
-    userEmail: ''
+    userEmail: '',
+    errorMessage: ''
+  }
+
+  onInviteUser = () => {
+    const invitedEmail = this.state.userEmail.replace(/\s/g,'')
+    firebase.auth().fetchProvidersForEmail(invitedEmail)
+      .then(providers => {
+        if (providers.length === 0) {
+          this.setState({ errorMessage: 'Usuário com este email ainda não existe' })
+        } else {
+          firebase.database().ref('members').once('value', (snapshot) => {
+            let user = {}
+            Object.keys(snapshot.val()).map((member, i) => {
+              if (snapshot.val()[member].email === invitedEmail) {
+                console.log(snapshot.val()[member]);
+                user = snapshot.val()[member]
+
+                firebase.database()
+                  .ref('members/' + member + '/lists')
+                  .update({
+                      [this.props.currentList.id]: true,
+                  })
+
+                firebase.database()
+                  .ref('lists/' + this.props.currentList.id + '/members')
+                  .update({
+                      [member]: true
+                  })
+              }
+            })
+          })
+          this.setState({ errorMessage: '' })
+        }
+      });
   }
 
   render () {
-    const { userEmail } = this.state
+    const { userEmail, errorMessage } = this.state
     const { onClose } = this.props
 
     return (
@@ -32,6 +67,7 @@ class NewUserModal extends Component {
             underlineColorAndroid='rgb(48,63,159)'
             autoCorrect={false}
           />
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
           <View style={styles.bottom}>
             <Button
               text='Cancelar'
@@ -42,7 +78,7 @@ class NewUserModal extends Component {
             <Button
               text='Convidar'
               accent
-              onPress={onClose}
+              onPress={this.onInviteUser}
               style={{ container: styles.actionButton }}
             />
           </View>
@@ -53,6 +89,7 @@ class NewUserModal extends Component {
 }
 
 NewUserModal.propTypes = {
+  currentList: PropTypes.object,
   onClose: PropTypes.func
 }
 

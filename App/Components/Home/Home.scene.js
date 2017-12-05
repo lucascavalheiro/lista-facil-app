@@ -208,6 +208,7 @@ class Home extends Component {
 
         {isNewUserModalOpen &&
           <NewUserModal
+            currentList={currentList}
             list={lists}
             onClose={() => this.toggleNewUserModal(false)}
           />

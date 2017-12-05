@@ -29,6 +29,10 @@ export default StyleSheet.create({
     color: Colors.primary,
     marginTop: 10
   },
+  errorMessage: {
+    color: Colors.red,
+    fontWeight: '400'
+  },
   bottom: {
     position: 'absolute',
     left: 0,

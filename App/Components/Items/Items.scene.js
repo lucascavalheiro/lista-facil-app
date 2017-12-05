@@ -37,7 +37,6 @@ class Items extends Component {
     this.setState({ isItemModalOpen: false })
   }
 
-
   onItemCreate = () => {
     const itemRef = firebase.database().ref().push()
 
