@@ -44,37 +44,23 @@ class Home extends Component {
     // console.log('user just logged in ', user)
     let listIds = []
     let lists = []
-    firebase.database().ref('members/' + user.uid + '/lists').once('value', (snapshot) => {
+    firebase.database().ref('members/' + user.uid + '/lists').on('value', (snapshot) => {
       listIds = Object.keys(snapshot.val())
-      listIds.forEach((id) => {
-        firebase.database().ref('lists/' + id).once('value', (snapshot) => {
+      listIds.map((id, index) => {
+        firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           let list = snapshot.val()
           list.id = id
-          lists.push(list)
-          this.setState({
-            lists: lists,
-            currentList: lists[0]
-          })
-
-          this.loadLists()
+          if (lists[index] && lists[index].id === id) {
+            lists[index] = list
+          } else {
+            lists.push(list)
+          }
+          this.setState({ lists: lists, currentList: lists[0] })
           this.loadListMembers()
         })
       })
-    })
-  }
 
-  loadLists = () => {
-    // let membersList = []
-    // firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
-    //   Object.keys(snapshot.val()).map((memberId) => {
-    //     firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
-    //       membersList.push(snapshot.val())
-    //       this.setState({
-    //         members: membersList
-    //       })
-    //     })
-    //   })
-    // })
+    })
   }
 
   loadListMembers = () => {
