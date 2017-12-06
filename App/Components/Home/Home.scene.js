@@ -19,6 +19,7 @@ import Expenses from '../Expenses/Expenses.scene'
 import DropdownModal from '../Shared/DropdownModal'
 import OptionsModal from '../Shared/OptionsModal'
 import ListsModal from '../Shared/ListsModal'
+import CheckedItemsModal from '../Shared/CheckedItemsModal'
 import NewUserModal from '../Shared/NewUserModal'
 
 import styles from './Home.styles.js'
@@ -31,6 +32,7 @@ class Home extends Component {
     isListsModalOpen: false,
     isOptionsModalOpen: false,
     isDropdownModalOpen: false,
+    isCheckedItemsModalOpen: false,
     isNewUserModalOpen: false,
     optionsList: [],
     lists: [],
@@ -101,6 +103,12 @@ class Home extends Component {
     })
   }
 
+  openCheckedItems = () => {
+    this.setState({
+      isCheckedItemsModalOpen: true
+    })
+  }
+
   toggleNewUserModal = (open) => {
     this.setState({ isNewUserModalOpen: open })
   }
@@ -123,6 +131,12 @@ class Home extends Component {
     })
   }
 
+  onCloseCheckedItemsModal = () => {
+    this.setState({
+      isCheckedItemsModalOpen: false
+    })
+  }
+
   onDropdownModalItemPress = (item) => {
     const index = this.state.lists.findIndex(x => x.id == item.id)
 
@@ -140,6 +154,9 @@ class Home extends Component {
     switch (item.name) {
       case 'Listas':
         this.openListsModal()
+        break
+      case 'Itens comprados':
+        this.openCheckedItems()
         break
       case 'Sair da conta':
         firebase.auth().signOut()
@@ -159,6 +176,7 @@ class Home extends Component {
       isDropdownModalOpen,
       isOptionsModalOpen,
       isNewUserModalOpen,
+      isCheckedItemsModalOpen,
       optionsList,
       dropdownPosition,
       lists,
@@ -179,7 +197,7 @@ class Home extends Component {
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.openOptionsModal([{name: 'Listas'}, {name: 'Sair da conta'}], 'right')}
+              onPress={() => this.openOptionsModal([{name: 'Listas'}, {name: 'Itens comprados'}, {name: 'Sair da conta'}], 'right')}
               style={styles.iconMoreContainer}
             >
               <Image source={Images.iconMore} style={styles.iconMore} />
@@ -222,6 +240,14 @@ class Home extends Component {
             list={optionsList}
             onClose={this.onCloseOptions}
             onOptionsPress={this.onOptionsPress}
+          />
+        }
+
+        {isCheckedItemsModalOpen &&
+          <CheckedItemsModal
+            currentList={currentList}
+            members={members}
+            onClose={this.onCloseCheckedItemsModal}
           />
         }
 

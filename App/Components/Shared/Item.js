@@ -27,7 +27,7 @@ class Item extends Component {
 
   render () {
     const { memberPhoto } = this.state
-    const { item, onCheckItem, hide, onAssignPress } = this.props
+    const { item, onCheckItem, hide, onAssignPress, assignDisabled } = this.props
 
     if (hide) {
       return null
@@ -38,12 +38,12 @@ class Item extends Component {
         <CheckBox
             style={{flex: 1, padding: 10}}
             onClick={onCheckItem}
-            isChecked={false}
+            isChecked={item.completed}
             rightText={item.name}
             rightTextStyle={{color: Colors.black}}
             checkBoxColor={Colors.gray}
         />
-        <TouchableOpacity onPress={() => onAssignPress(item)}>
+        <TouchableOpacity onPress={assignDisabled ? null : () => onAssignPress(item)}>
           <Image
             style={styles.photo}
             source={memberPhoto ? {uri: memberPhoto} : Images.iconPersonPlus}
@@ -60,6 +60,7 @@ Item.propTypes = {
   onCheckItem: PropTypes.func,
   onAssignPress: PropTypes.func,
   currentListId: PropTypes.string,
+  assignDisabled: PropTypes.bool
 }
 
 export default Item
