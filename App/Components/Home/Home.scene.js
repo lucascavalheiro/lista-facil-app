@@ -32,7 +32,7 @@ class Home extends Component {
     isOptionsModalOpen: false,
     isDropdownModalOpen: false,
     isNewUserModalOpen: false,
-    dropdownList: [],
+    optionsList: [],
     lists: [],
     listsModalLists: [],
     currentList: {},
@@ -49,14 +49,18 @@ class Home extends Component {
       listIds.map((id, index) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
           let list = snapshot.val()
-          list.id = id
-          if (lists[index] && lists[index].id === id) {
-            lists[index] = list
+          if (list) {
+            list.id = id
+            if (lists[index] && lists[index].id === id) {
+              lists[index] = list
+            } else {
+              lists.push(list)
+            }
+            this.setState({ lists: lists, currentList: lists[0] })
+            this.loadListMembers()
           } else {
-            lists.push(list)
+            lists.splice(index, 1)
           }
-          this.setState({ lists: lists, currentList: lists[0] })
-          this.loadListMembers()
         })
       })
 
@@ -66,28 +70,27 @@ class Home extends Component {
   loadListMembers = () => {
     let membersList = []
     firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
-      Object.keys(snapshot.val()).map((memberId) => {
-        firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
-          membersList.push(snapshot.val())
-          this.setState({
-            members: membersList
+        Object.keys(snapshot.val()).map((memberId) => {
+          firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
+            membersList.push(snapshot.val())
+            this.setState({
+              members: membersList
+            })
           })
         })
-      })
     })
   }
 
   openOptionsModal = (items, position) => {
     this.setState({
       isOptionsModalOpen: true,
-      dropdownList: items,
+      optionsList: items,
     })
   }
 
-  openDropdownModal = (items, position) => {
+  openDropdownModal = () => {
     this.setState({
-      isDropdownModalOpen: true,
-      dropdownList: items,
+      isDropdownModalOpen: true
     })
   }
 
@@ -124,11 +127,11 @@ class Home extends Component {
     const index = this.state.lists.findIndex(x => x.id == item.id)
 
     this.setState({
-      isDropdownModalOpen: false,
-      currentList: this.state.lists[index]
+      currentList: this.state.lists[index],
+      isDropdownModalOpen: false
+    }, () => {
+      this.loadListMembers()
     })
-
-    this.loadListMembers()
   }
 
   onOptionsPress = (item) => {
@@ -156,7 +159,7 @@ class Home extends Component {
       isDropdownModalOpen,
       isOptionsModalOpen,
       isNewUserModalOpen,
-      dropdownList,
+      optionsList,
       dropdownPosition,
       lists,
       members,
@@ -169,7 +172,7 @@ class Home extends Component {
         <View style={styles.header}>
           <View style={styles.headerTop}>
             <TouchableOpacity
-              onPress={() => this.openDropdownModal(lists, 'left')}
+              onPress={this.openDropdownModal}
               style={styles.listNameContainer}
             >
               <Text style={styles.listName}>{currentList ? currentList.name : ' '}</Text>
@@ -207,7 +210,7 @@ class Home extends Component {
 
         {isDropdownModalOpen &&
           <DropdownModal
-            list={dropdownList}
+            list={lists}
             onClose={this.onCloseDropdown}
             onItemPress={this.onDropdownModalItemPress}
           />
@@ -216,7 +219,7 @@ class Home extends Component {
         {isOptionsModalOpen &&
           <OptionsModal
             user={user}
-            list={dropdownList}
+            list={optionsList}
             onClose={this.onCloseOptions}
             onOptionsPress={this.onOptionsPress}
           />

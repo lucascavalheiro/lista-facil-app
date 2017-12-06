@@ -9,7 +9,8 @@ const images = {
   iconHistory: require('../Images/Icons/icon_history.png'),
   iconMore: require('../Images/Icons/icon_more.png'),
   iconPersonPlus: require('../Images/Icons/icon_person_plus.png'),
-  iconPersonPlusLight: require('../Images/Icons/icon_person_plus_light.png')
+  iconPersonPlusLight: require('../Images/Icons/icon_person_plus_light.png'),
+  iconDelete: require('../Images/Icons/icon_delete.png'),
 }
 
 export default images

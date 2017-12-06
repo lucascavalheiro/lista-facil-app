@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, TouchableHighlight, ScrollView, TextInput } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  TextInput,
+  TouchableHighlight
+} from 'react-native'
 import { Images } from '../../Themes/'
 import { Button } from 'react-native-material-ui'
 import firebase from 'react-native-firebase'
@@ -30,10 +38,30 @@ class ListsModal extends Component {
     })
   }
 
-  updateListName = (index) => {
+  onUpdateListName = (index) => {
     firebase.database().ref('lists/' + this.props.lists[index].id).update({
       name: this.state.listName
     })
+  }
+
+  onDeleteList = (index) => {
+    const memberUpdate = 'members/' + this.props.user.uid + '/lists/' + this.props.lists[index].id
+    const listUpdate = 'lists/' + this.props.lists[index].id
+    let updates = {
+      [memberUpdate]: null,
+      [listUpdate]: null
+    }
+
+    firebase.database().ref().update(updates)
+
+
+  }
+
+  onConclude = () => {
+    if (this.state.indexToEdit != null) {
+      this.onUpdateListName(this.state.indexToEdit)
+    }
+    this.props.onClose()
   }
 
   render () {
@@ -42,36 +70,42 @@ class ListsModal extends Component {
 
     const listsToRender = lists.map((item, i) => {
       return (
-        <TouchableHighlight key={i}>
+        <View key={i} style={styles.itemContainer}>
           <TextInput
             style={styles.item}
             onFocus={() => this.setState({listName: item.name, indexToEdit: i})}
             onChangeText={(listName) => this.setState({listName})}
-            onBlur={() => this.updateListName(i)}
+            onBlur={() => this.onUpdateListName(i)}
             value={indexToEdit === i ? listName : item.name}
             placeholder={item.name}
             underlineColorAndroid='rgb(48,63,159)'
             autoCorrect={false}
           />
-        </TouchableHighlight>
+          <TouchableOpacity onPress={() => this.onDeleteList(i)}>
+            <Image source={Images.iconDelete} style={styles.deleteButton} />
+          </TouchableOpacity>
+        </View>
       )
     })
 
     return (
-      <TouchableHighlight style={styles.background} onPress={onClose}>
+      <View style={styles.modalContainer}>
+        <TouchableHighlight style={styles.background} onPress={onClose}>
+          <View></View>
+        </TouchableHighlight>
         <View style={styles.container}>
           <Text style={styles.title}>Listas</Text>
           <ScrollView style={styles.lists}>
-            <TouchableHighlight onPress={this.onCreateList}>
+            <TouchableOpacity onPress={this.onCreateList}>
               <Text style={styles.newList}>NOVA LISTA</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             {listsToRender}
           </ScrollView>
           <View style={styles.bottom}>
-            <Button onPress={onClose} accent text="Ok" />
+            <Button onPress={this.onConclude} accent text="Ok" />
           </View>
         </View>
-      </TouchableHighlight>
+      </View>
     )
   }
 }
