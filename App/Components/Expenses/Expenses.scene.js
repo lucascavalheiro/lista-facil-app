@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   View,
   Text,
@@ -15,14 +16,15 @@ import { Button } from 'react-native-material-ui'
 
 import styles from './Expenses.styles.js'
 
-const users = [
-  {name: 'Marcela Alcântara', userPicture: 'http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'},
-  {name: 'Pedro José Silva', userPicture: 'http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'}
-]
-
 class Expenses extends Component {
   state = {
+    expenses: [],
     expenseValue: '',
+    members: []
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ members: nextProps.members })
   }
 
   onSettleUp = () => {
@@ -30,7 +32,15 @@ class Expenses extends Component {
   }
 
   render () {
-    const { expenseValue, quantity } = this.state
+    const { user, currentList } = this.props
+    const { expenses, expenseValue, members } = this.state
+    console.log('members ', members);
+    members.map((member, i) => {
+      console.log(member);
+      console.log(i);
+    })
+
+
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -52,7 +62,7 @@ class Expenses extends Component {
           <ScrollView style={styles.balanceContainer}>
             <View style={styles.owner}>
               <UserPicture
-                userPicture='http://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg'
+                userPicture={user.photoURL}
                 size={50}
               />
               <View style={styles.totalBalanceContainer}>
@@ -68,8 +78,8 @@ class Expenses extends Component {
               </View>
             </View>
             <View style={styles.usersContainer}>
-              {users.map((user, i) =>
-                <UserBalance user={user} key={i} />
+              {members && members.map((member, i) =>
+                <UserBalance user={member} key={i} />
               )}
             </View>
           </ScrollView>
@@ -90,6 +100,12 @@ class Expenses extends Component {
       </View>
     )
   }
+}
+
+Expenses.propTypes = {
+  user: PropTypes.object,
+  currentList: PropTypes.object,
+  members: PropTypes.arrayOf(PropTypes.object)
 }
 
 const mapStateToProps = state => {

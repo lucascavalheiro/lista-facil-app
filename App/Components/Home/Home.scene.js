@@ -56,7 +56,7 @@ class Home extends Component {
             if (lists[index] && lists[index].id === id) {
               lists[index] = list
             } else {
-              lists.push(list)
+              lists = lists.concat(list)
             }
             this.setState({ lists: lists, currentList: lists[0] })
             this.loadListMembers()
@@ -74,7 +74,7 @@ class Home extends Component {
     firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
         Object.keys(snapshot.val()).map((memberId) => {
           firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
-            membersList.push(snapshot.val())
+            membersList = membersList.concat(snapshot.val())
             this.setState({
               members: membersList
             })
@@ -222,7 +222,7 @@ class Home extends Component {
             <Items currentList={currentList} members={members} />
           </ScrollView>
           <ScrollView tabLabel='DESPESAS'>
-            <Expenses />
+            <Expenses user={user} currentList={currentList} members={members} />
           </ScrollView>
         </ScrollableTabView>
 

@@ -37,7 +37,6 @@ class CheckedItemsModal extends Component {
   render () {
     const { items } = this.state
     const { currentList, members, onClose } = this.props
-    console.log('component');
 
     return (
       <View style={styles.modalContainer}>

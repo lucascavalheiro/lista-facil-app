@@ -14,7 +14,7 @@ class UserBalance extends Component {
         <View style={styles.userInfo}>
           <UserPicture
             size={30}
-            userPicture={user.userPicture}
+            userPicture={user.photoURL}
           />
           <Text style={styles.userName}>{user.name}</Text>
         </View>
