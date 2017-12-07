@@ -28,6 +28,18 @@ class Expenses extends Component {
     listNotShared: true
   }
 
+  componentDidMount() {
+    this.setState({ members: this.props.members })
+
+    firebase.database().ref('expenses/' + this.props.currentList.id).once('value', (snapshot) => {
+      this.setState({
+        expenses: snapshot.val()
+      }, () => {
+        this.calculateExpenses()
+      })
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({ members: nextProps.members })
 
@@ -53,7 +65,6 @@ class Expenses extends Component {
       })
 
       const splitedValue = totalValue / this.state.members.length
-      console.log('splitedValue ', splitedValue);
       let userBalance = 0
       Object.keys(this.state.expenses).map(expense => {
         if (this.state.expenses[expense].owner === this.props.user.uid) {
@@ -61,8 +72,6 @@ class Expenses extends Component {
         }
       })
       userBalance -= splitedValue
-      console.log('userBalance ', userBalance);
-
 
       this.setState({
         listNotShared: this.state.members.length === 1,
