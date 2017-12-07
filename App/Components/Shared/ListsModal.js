@@ -53,14 +53,13 @@ class ListsModal extends Component {
     }
 
     firebase.database().ref().update(updates)
-
-
   }
 
   onConclude = () => {
     if (this.state.indexToEdit != null) {
       this.onUpdateListName(this.state.indexToEdit)
     }
+
     this.props.onClose()
   }
 

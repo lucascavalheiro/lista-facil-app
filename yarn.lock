@@ -5409,6 +5409,10 @@ mockery@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mockery/-/mockery-2.1.0.tgz#5b0aef1ff564f0f8139445e165536c7909713470"
 
+moment@^2.19.1:
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -6658,6 +6662,13 @@ react-native-firebase@^3.1.1:
 react-native-image-crop-picker@^0.18.1:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.18.1.tgz#ebdbe72def5afb6c69aa6e2ad72fd3a7de8ee408"
+
+react-native-masked-text@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/react-native-masked-text/-/react-native-masked-text-1.6.4.tgz#b04c5537359bff7b906ebe1827d412052dd138f2"
+  dependencies:
+    moment "^2.19.1"
+    tinymask "^1.0.2"
 
 react-native-material-design-styles@^0.2.6:
   version "0.2.7"
@@ -7952,6 +7963,10 @@ timers-browserify@^2.0.2:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.4.tgz#96ca53f4b794a5e7c0e1bd7cc88a372298fa01e6"
   dependencies:
     setimmediate "^1.0.4"
+
+tinymask@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tinymask/-/tinymask-1.0.2.tgz#df3775a94087b0d3d056c256e8923c01b7ec0941"
 
 tmp@^0.0.31:
   version "0.0.31"
