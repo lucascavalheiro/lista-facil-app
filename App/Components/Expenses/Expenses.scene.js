@@ -21,17 +21,39 @@ class Expenses extends Component {
   state = {
     expenses: {},
     expenseValue: null,
-    members: []
-  }
-
-  componentDidMount() {
-    firebase.database().ref('expenses/' + this.props.currentList.id).on('value', (snapshot) => {
-      this.setState({ expenses: snapshot.val() })
-    })
+    members: [],
+    totalValue: 0,
+    totalValueToShow: ''
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ members: nextProps.members })
+
+    firebase.database().ref('expenses/' + nextProps.currentList.id).on('value', (snapshot) => {
+      this.setState({
+        expenses: snapshot.val()
+      }, () => {
+        this.calculateExpenses()
+      })
+    })
+  }
+
+  calculateExpenses = () => {
+    let totalValue = 0
+    let expensesNotSettleUp = []
+    if (this.state.expenses) {
+      Object.keys(this.state.expenses).map(expense => {
+        if (!this.state.expenses[expense].settleUp) {
+          totalValue += this.state.expenses[expense].cost
+          expensesNotSettleUp.push(this.state.expenses[expense])
+        }
+      })
+
+      this.setState({
+        totalValue: totalValue,
+        totalValueToShow: parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
+      })
+    }
   }
 
   onCreateExpense = () => {
@@ -56,13 +78,7 @@ class Expenses extends Component {
 
   render () {
     const { user, currentList } = this.props
-    const { expenses, expenseValue, members } = this.state
-
-    let totalValue = 0
-    Object.keys(expenses).map(expense => {
-      totalValue += expenses[expense].cost
-    })
-    const totalValueToShow = parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
+    const { expenses, expenseValue, members, totalValueToShow } = this.state
 
     return (
       <View style={styles.container}>
