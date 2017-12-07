@@ -23,7 +23,9 @@ class Expenses extends Component {
     expenseValue: null,
     members: [],
     totalValue: 0,
-    totalValueToShow: ''
+    totalValueToShow: '',
+    userBalance: 0,
+    listNotShared: true
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,6 +43,7 @@ class Expenses extends Component {
   calculateExpenses = () => {
     let totalValue = 0
     let expensesNotSettleUp = []
+
     if (this.state.expenses) {
       Object.keys(this.state.expenses).map(expense => {
         if (!this.state.expenses[expense].settleUp) {
@@ -49,7 +52,21 @@ class Expenses extends Component {
         }
       })
 
+      const splitedValue = totalValue / this.state.members.length
+      console.log('splitedValue ', splitedValue);
+      let userBalance = 0
+      Object.keys(this.state.expenses).map(expense => {
+        if (this.state.expenses[expense].owner === this.props.user.uid) {
+          userBalance += this.state.expenses[expense].cost
+        }
+      })
+      userBalance -= splitedValue
+      console.log('userBalance ', userBalance);
+
+
       this.setState({
+        listNotShared: this.state.members.length === 1,
+        userBalance: userBalance,
         totalValue: totalValue,
         totalValueToShow: parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
       })
@@ -78,7 +95,23 @@ class Expenses extends Component {
 
   render () {
     const { user, currentList } = this.props
-    const { expenses, expenseValue, members, totalValueToShow } = this.state
+    const {
+      expenses,
+      expenseValue,
+      members,
+      totalValueToShow,
+      userBalance,
+      listNotShared
+    } = this.state
+
+    let totalBalanceMessage = {}
+    if (userBalance == 0 || listNotShared) {
+      totalBalanceMessage = <Text style={styles.oweYou}>Quitado</Text>
+    } else if (userBalance < 0 ) {
+      totalBalanceMessage =  <Text style={styles.youOwe}>você deve R${Math.abs(userBalance).toFixed(2)}</Text>
+    } else if (userBalance > 0) {
+      totalBalanceMessage =  <Text style={styles.oweYou}>te devem R${userBalance.toFixed(2)}</Text>
+    }
 
     return (
       <View style={styles.container}>
@@ -107,12 +140,7 @@ class Expenses extends Component {
               <View style={styles.totalBalanceContainer}>
                 <Text style={styles.totalBalance}>Balanço total</Text>
                 <View style={styles.oweContainer}>
-                  {true && <View>
-                    <Text style={styles.youOwe}>você deve R$23,00</Text>
-                  </View>}
-                  {false && <View>
-                    <Text style={styles.oweYou}>te devem R$23,00</Text>
-                  </View>}
+                  <View>{totalBalanceMessage}</View>
                 </View>
               </View>
             </View>
@@ -125,7 +153,7 @@ class Expenses extends Component {
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.total}>
-            <Text style={styles.totalSpendingTitle}>Total gasto por todos</Text>
+            <Text style={styles.totalSpendingTitle}>Total gasto</Text>
             <Text style={styles.totalSpending}>R${totalValueToShow}</Text>
           </View>
           <Button
