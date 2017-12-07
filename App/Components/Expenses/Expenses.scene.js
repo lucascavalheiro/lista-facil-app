@@ -97,7 +97,11 @@ class Expenses extends Component {
   }
 
   onSettleUp = () => {
-    console.log('settle up');
+    let updates = {}
+    Object.keys(this.state.expenses).map((expense, i) => {
+      updates[expense] = {settleUp: true}
+    })
+    firebase.database().ref('expenses/' + this.props.currentList.id).update(updates)
   }
 
   render () {
