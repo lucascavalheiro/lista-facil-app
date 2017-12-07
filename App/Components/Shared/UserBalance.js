@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, Image, Text } from 'react-native'
 import UserPicture from './UserPicture'
+import firebase from 'react-native-firebase'
 
 import styles from './UserBalance.styles.js'
 
 class UserBalance extends Component {
   render () {
     const { user } = this.props
+
+    if (user.id === firebase.auth().currentUser._user.uid) {
+      return null
+    }
 
     return (
       <View style={styles.container}>

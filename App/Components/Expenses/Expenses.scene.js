@@ -62,7 +62,7 @@ class Expenses extends Component {
     Object.keys(expenses).map(expense => {
       totalValue += expenses[expense].cost
     })
-    totalValue = parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
+    const totalValueToShow = parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
 
     return (
       <View style={styles.container}>
@@ -110,7 +110,7 @@ class Expenses extends Component {
         <View style={styles.bottomContainer}>
           <View style={styles.total}>
             <Text style={styles.totalSpendingTitle}>Total gasto por todos</Text>
-            <Text style={styles.totalSpending}>R${totalValue}</Text>
+            <Text style={styles.totalSpending}>R${totalValueToShow}</Text>
           </View>
           <Button
             text='Quitar'

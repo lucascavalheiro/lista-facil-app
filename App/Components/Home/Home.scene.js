@@ -72,9 +72,13 @@ class Home extends Component {
   loadListMembers = () => {
     let membersList = []
     firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
-        Object.keys(snapshot.val()).map((memberId) => {
+        Object.keys(snapshot.val()).map((memberId, i) => {
           firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
-            membersList = membersList.concat(snapshot.val())
+            let member = snapshot.val()
+            if (member) {
+              member.id = memberId
+              membersList = membersList.concat(member)
+            }
             this.setState({
               members: membersList
             })
