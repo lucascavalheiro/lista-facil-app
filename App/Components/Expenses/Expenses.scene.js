@@ -25,25 +25,22 @@ class Expenses extends Component {
     totalValue: 0,
     totalValueToShow: '',
     userBalance: 0,
+    splitedValue: 0,
     listNotShared: true
   }
 
   componentDidMount() {
     this.setState({ members: this.props.members })
-
-    firebase.database().ref('expenses/' + this.props.currentList.id).once('value', (snapshot) => {
-      this.setState({
-        expenses: snapshot.val()
-      }, () => {
-        this.calculateExpenses()
-      })
-    })
+    this.loadExpenses(this.props)
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ members: nextProps.members })
+    this.loadExpenses(nextProps)
+  }
 
-    firebase.database().ref('expenses/' + nextProps.currentList.id).on('value', (snapshot) => {
+  loadExpenses = (props) => {
+    firebase.database().ref('expenses/' + props.currentList.id).on('value', (snapshot) => {
       this.setState({
         expenses: snapshot.val()
       }, () => {
@@ -77,6 +74,7 @@ class Expenses extends Component {
         listNotShared: this.state.members.length === 1,
         userBalance: userBalance,
         totalValue: totalValue,
+        splitedValue: splitedValue,
         totalValueToShow: parseFloat(Math.round(totalValue * 100) / 100).toFixed(2)
       })
     }
@@ -108,8 +106,10 @@ class Expenses extends Component {
       expenses,
       expenseValue,
       members,
+      totalValue,
       totalValueToShow,
       userBalance,
+      splitedValue,
       listNotShared
     } = this.state
 
@@ -155,7 +155,13 @@ class Expenses extends Component {
             </View>
             <View style={styles.usersContainer}>
               {members && members.map((member, i) =>
-                <UserBalance user={member} key={i} />
+                <UserBalance
+                  user={member}
+                  key={i}
+                  totalValue={totalValue}
+                  splitedValue={splitedValue}
+                  expenses={expenses}
+                />
               )}
             </View>
           </ScrollView>

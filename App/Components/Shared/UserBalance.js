@@ -7,11 +7,57 @@ import firebase from 'react-native-firebase'
 import styles from './UserBalance.styles.js'
 
 class UserBalance extends Component {
+  state = {
+    memberBalance: 0
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.calculateExpenses(nextProps)
+  }
+
+  calculateExpenses = (nextProps) => {
+    let memberBalance = 0
+    Object.keys(nextProps.expenses).map(expense => {
+      if (nextProps.expenses[expense].owner === nextProps.user.id) {
+        memberBalance += nextProps.expenses[expense].cost
+      }
+    })
+    memberBalance -= nextProps.splitedValue
+
+    this.setState({
+      memberBalance: memberBalance,
+    })
+  }
+
   render () {
-    const { user } = this.props
+    const { user, totalValue } = this.props
+    const { memberBalance } = this.state
 
     if (user.id === firebase.auth().currentUser._user.uid) {
       return null
+    }
+
+    let totalBalanceMessage = {}
+    if (memberBalance == 0) {
+      totalBalanceMessage = (
+        <View style={styles.balanceContainer}>
+          <Text style={styles.oweYou}>quitado</Text>
+        </View>
+      )
+    } else if (memberBalance > 0 ) {
+      totalBalanceMessage = (
+        <View style={styles.balanceContainer}>
+          <Text style={styles.youOwe}>você deve</Text>
+          <Text style={styles.youOweValue}>R${memberBalance.toFixed(2)}</Text>
+        </View>
+      )
+    } else if (memberBalance < 0) {
+      totalBalanceMessage = (
+        <View style={styles.balanceContainer}>
+          <Text style={styles.oweYou}>te deve</Text>
+          <Text style={styles.oweYouValue}>R${Math.abs(memberBalance).toFixed(2)}</Text>
+        </View>
+      )
     }
 
     return (
@@ -23,18 +69,7 @@ class UserBalance extends Component {
           />
           <Text style={styles.userName}>{user.name}</Text>
         </View>
-        {true &&
-          <View style={styles.balanceContainer}>
-            <Text style={styles.oweYou}>te deve</Text>
-            <Text style={styles.oweYouValue}>R$23,00</Text>
-          </View>
-        }
-        {false &&
-          <View style={styles.balanceContainer}>
-            <Text style={styles.youOwe}>você deve</Text>
-            <Text style={styles.youOweValue}>R$23,00</Text>
-          </View>
-        }
+        <View>{totalBalanceMessage}</View>
       </View>
     )
   }
@@ -42,7 +77,10 @@ class UserBalance extends Component {
 
 UserBalance.propTypes = {
   user: PropTypes.object,
+  expenses: PropTypes.object,
   balance: PropTypes.string,
+  totalValue: PropTypes.number,
+  splitedValue: PropTypes.number
 }
 
 export default UserBalance
