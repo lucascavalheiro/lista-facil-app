@@ -44,9 +44,10 @@ class Home extends Component {
   componentDidMount() {
     user = firebase.auth().currentUser._user
     // console.log('user just logged in ', user)
-    let listIds = []
-    let lists = []
     firebase.database().ref('members/' + user.uid + '/lists').on('value', (snapshot) => {
+      let listIds = []
+      let lists = []
+
       listIds = Object.keys(snapshot.val())
       listIds.map((id, index) => {
         firebase.database().ref('lists/' + id).on('value', (snapshot) => {
