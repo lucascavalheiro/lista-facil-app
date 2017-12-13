@@ -26,7 +26,7 @@ class ListsModal extends Component {
     const listKey = ref.key
 
     firebase.database().ref('lists/' + listKey).update({
-      name: 'Outra Lista',
+      name: 'Nova Lista',
       owner: this.props.user.uid,
       members: {
         [this.props.user.uid]: true

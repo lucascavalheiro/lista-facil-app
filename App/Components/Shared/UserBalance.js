@@ -17,16 +17,18 @@ class UserBalance extends Component {
 
   calculateExpenses = (nextProps) => {
     let memberBalance = 0
-    Object.keys(nextProps.expenses).map(expense => {
-      if (nextProps.expenses[expense].owner === nextProps.user.id) {
-        memberBalance += nextProps.expenses[expense].cost
-      }
-    })
-    memberBalance -= nextProps.splitedValue
+    if (nextProps.expenses) {
+      Object.keys(nextProps.expenses).map(expense => {
+        if (nextProps.expenses[expense].owner === nextProps.user.id) {
+          memberBalance += nextProps.expenses[expense].cost
+        }
+      })
+      memberBalance -= nextProps.splitedValue
 
-    this.setState({
-      memberBalance: memberBalance,
-    })
+      this.setState({
+        memberBalance: memberBalance,
+      })
+    }
   }
 
   render () {
