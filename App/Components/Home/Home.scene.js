@@ -36,21 +36,24 @@ class Home extends Component {
     isNewUserModalOpen: false,
     optionsList: [],
     lists: [],
-    listsModalLists: [],
-    currentList: {},
+    currentList: null,
     members: []
   }
 
   componentDidMount() {
     user = firebase.auth().currentUser._user
     // console.log('user just logged in ', user)
-    firebase.database().ref('members/' + user.uid + '/lists').on('value', (snapshot) => {
+    this.updateLists()
+  }
+
+  updateLists = () => {
+    firebase.database().ref('members/' + user.uid + '/lists').once('value', (snapshot) => {
       let listIds = []
       let lists = []
 
       listIds = Object.keys(snapshot.val())
       listIds.map((id, index) => {
-        firebase.database().ref('lists/' + id).on('value', (snapshot) => {
+        firebase.database().ref('lists/' + id).once('value', (snapshot) => {
           let list = snapshot.val()
           if (list) {
             list.id = id
@@ -59,20 +62,23 @@ class Home extends Component {
             } else {
               lists = lists.concat(list)
             }
-            this.setState({ lists: lists, currentList: lists[0] })
-            this.loadListMembers()
+            this.setState({ lists: lists }, () => {
+              this.loadListMembers()
+            })
           } else {
             lists.splice(index, 1)
           }
         })
       })
-
     })
   }
 
   loadListMembers = () => {
+    let currentList = this.state.currentList || this.state.lists[0]
     let membersList = []
-    firebase.database().ref('lists/' + this.state.currentList.id + '/members').on('value', (snapshot) => {
+
+    firebase.database().ref('lists/' + currentList.id + '/members').on('value', (snapshot) => {
+      if (snapshot.val()) {
         Object.keys(snapshot.val()).map((memberId, i) => {
           firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
             let member = snapshot.val()
@@ -85,6 +91,7 @@ class Home extends Component {
             })
           })
         })
+      }
     })
   }
 
@@ -103,8 +110,7 @@ class Home extends Component {
 
   openListsModal = () => {
     this.setState({
-      isListsModalOpen: true,
-      listsModalLists: this.state.lists
+      isListsModalOpen: true
     })
   }
 
@@ -122,6 +128,7 @@ class Home extends Component {
     this.setState({
       isDropdownModalOpen: false
     })
+    this.updateLists()
   }
 
   onCloseOptions = () => {
@@ -134,12 +141,14 @@ class Home extends Component {
     this.setState({
       isListsModalOpen: false
     })
+    this.updateLists()
   }
 
   onCloseCheckedItemsModal = () => {
     this.setState({
       isCheckedItemsModalOpen: false
     })
+    this.updateLists()
   }
 
   onDropdownModalItemPress = (item) => {
@@ -149,7 +158,7 @@ class Home extends Component {
       currentList: this.state.lists[index],
       isDropdownModalOpen: false
     }, () => {
-      this.loadListMembers()
+      this.updateLists()
     })
   }
 
@@ -185,10 +194,14 @@ class Home extends Component {
       optionsList,
       dropdownPosition,
       lists,
-      members,
-      listsModalLists,
-      currentList
+      members
     } = this.state
+
+    let { currentList } = this.state
+
+    if (!currentList) {
+      currentList = lists[0]
+    }
 
     return (
       <View style={styles.container}>
@@ -198,7 +211,7 @@ class Home extends Component {
               onPress={this.openDropdownModal}
               style={styles.listNameContainer}
             >
-              <Text style={styles.listName}>{currentList ? currentList.name : ' '}</Text>
+              <Text style={styles.listName}>{currentList ? currentList.name : 'Carregando...'}</Text>
               <Text style={styles.listArrow}>▼</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -259,8 +272,9 @@ class Home extends Component {
         {isListsModalOpen &&
           <ListsModal
             user={user}
-            lists={listsModalLists}
+            lists={lists}
             onClose={this.onCloseLists}
+            updateLists={this.updateLists}
           />
         }
 

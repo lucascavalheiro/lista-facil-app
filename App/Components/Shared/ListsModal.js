@@ -31,6 +31,8 @@ class ListsModal extends Component {
       members: {
         [this.props.user.uid]: true
       }
+    }, () => {
+      this.onListCreated()
     })
 
     firebase.database().ref('members/' + this.props.user.uid + '/lists').update({
@@ -38,9 +40,15 @@ class ListsModal extends Component {
     })
   }
 
+  onListCreated = () => {
+    this.props.updateLists()
+  }
+
   onUpdateListName = (index) => {
     firebase.database().ref('lists/' + this.props.lists[index].id).update({
       name: this.state.listName
+    }, () => {
+      this.props.updateLists()
     })
   }
 
@@ -52,7 +60,7 @@ class ListsModal extends Component {
       [listUpdate]: null
     }
 
-    firebase.database().ref().update(updates)
+    firebase.database().ref().update(updates, ()=> { this.props.updateLists() })
   }
 
   onConclude = () => {
@@ -112,7 +120,8 @@ class ListsModal extends Component {
 ListsModal.propTypes = {
   user: PropTypes.object,
   lists: PropTypes.arrayOf(PropTypes.object),
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  updateLists: PropTypes.func
 }
 
 export default ListsModal
