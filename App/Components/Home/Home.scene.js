@@ -6,6 +6,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
   Image,
   Picker,
 } from 'react-native'
@@ -34,6 +35,7 @@ class Home extends Component {
     isDropdownModalOpen: false,
     isCheckedItemsModalOpen: false,
     isNewUserModalOpen: false,
+    hasUsersListLoaded: true,
     optionsList: [],
     lists: [],
     currentList: null,
@@ -77,20 +79,23 @@ class Home extends Component {
     let currentList = this.state.currentList || this.state.lists[0]
     let membersList = []
 
-    firebase.database().ref('lists/' + currentList.id + '/members').on('value', (snapshot) => {
+    this.setState({ hasUsersListLoaded: false }, () => {
+      setTimeout(() => {
+        this.setState({ hasUsersListLoaded: true })
+      }, 2000)
+    })
+
+    firebase.database().ref('lists/' + currentList.id + '/members').once('value', (snapshot) => {
       if (snapshot.val()) {
         Object.keys(snapshot.val()).map((memberId, i) => {
-          firebase.database().ref('members/' + memberId).on('value', (snapshot) => {
+          firebase.database().ref('members/' + memberId).once('value', (snapshot) => {
             let member = snapshot.val()
-            if (member) {
-              member.id = memberId
-              membersList = membersList.concat(member)
-            }
-            this.setState({
-              members: membersList
-            })
+            member.id = memberId
+            membersList = membersList.concat(member)
+            this.setState({ members: membersList })
           })
         })
+
       }
     })
   }
@@ -120,8 +125,17 @@ class Home extends Component {
     })
   }
 
-  toggleNewUserModal = (open) => {
-    this.setState({ isNewUserModalOpen: open })
+  openNewUserModal = () => {
+    this.setState({
+      isNewUserModalOpen: true
+    })
+  }
+
+  closeNewUserModal = () => {
+    this.setState({
+      isNewUserModalOpen: false
+    })
+    this.loadListMembers()
   }
 
   onCloseDropdown = () => {
@@ -193,6 +207,7 @@ class Home extends Component {
       isCheckedItemsModalOpen,
       optionsList,
       dropdownPosition,
+      hasUsersListLoaded,
       lists,
       members
     } = this.state
@@ -222,12 +237,19 @@ class Home extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.usersList}>
-            <TouchableOpacity onPress={() => this.toggleNewUserModal(true)}>
+            <TouchableOpacity onPress={this.openNewUserModal}>
               <Image source={Images.iconPersonPlusLight} style={styles.iconPersonPlusLight} />
             </TouchableOpacity>
-            {members && members.map((member, i) =>
-              <Image key={i} source={{uri: member.photoURL}} style={styles.userPhoto} />
-            )}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {members && members.map((member, i) =>
+                <Image key={i} source={{uri: member.photoURL}} style={styles.userPhoto} />
+              )}
+            </ScrollView>
+            {hasUsersListLoaded ||
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator animating size="small" style={styles.userPhoto} color={Colors.white} />
+              </View>
+            }
           </View>
         </View>
         <ScrollableTabView
@@ -236,12 +258,12 @@ class Home extends Component {
           tabBarInactiveTextColor={Colors.blueLight}
           tabBarTextStyle={styles.tabBarText}
           tabBarUnderlineStyle={styles.tabBarUnderline}>
-          <ScrollView tabLabel='ITENS'>
+          <ScrollView tabLabel='ITENS' style={{ flex: 1 }}>
             <Items currentList={currentList} members={members} />
           </ScrollView>
-          <ScrollView tabLabel='DESPESAS'>
+          <View tabLabel='DESPESAS' style={{ flex: 1 }}>
             <Expenses user={user} currentList={currentList} members={members} />
-          </ScrollView>
+          </View>
         </ScrollableTabView>
 
         {isDropdownModalOpen &&
@@ -282,7 +304,7 @@ class Home extends Component {
           <NewUserModal
             currentList={currentList}
             list={lists}
-            onClose={() => this.toggleNewUserModal(false)}
+            onClose={this.closeNewUserModal}
           />
         }
       </View>

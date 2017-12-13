@@ -40,19 +40,21 @@ class Items extends Component {
   }
 
   onItemCreate = () => {
-    const itemRef = firebase.database().ref().push()
+    if (this.state.newItemName) {
+      const itemRef = firebase.database().ref().push()
 
-    firebase.database()
-      .ref('items/' + this.props.currentList.id)
-      .update({
-        [itemRef]: {
-          assigned: "",
-          completed: false,
-          name: this.state.newItemName
-        }
-      }, () => {
-        this.setState({ newItemName: '' })
-      })
+      firebase.database()
+        .ref('items/' + this.props.currentList.id)
+        .update({
+          [itemRef]: {
+            assigned: "",
+            completed: false,
+            name: this.state.newItemName
+          }
+        }, () => {
+          this.setState({ newItemName: '' })
+        })
+    }
   }
 
   onItemConclude = (item) => {
@@ -116,7 +118,6 @@ class Items extends Component {
           <View style={styles.addButtonContainer}>
             <ActionButton
               onPress={this.onItemCreate}
-              disabled={newItemName === ''}
               style={{ container: styles.addButton }}
             />
           </View>

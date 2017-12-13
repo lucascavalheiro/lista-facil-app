@@ -24,6 +24,7 @@ export default StyleSheet.create({
     marginBottom: Metrics.marginVertical
   },
   usersList: {
+    position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
     height: 25
@@ -33,6 +34,12 @@ export default StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 25
+  },
+  loadingContainer: {
+    position: 'absolute',
+    left: 30,
+    right: 0,
+    backgroundColor: Colors.primary
   },
   iconMoreContainer: {
     width: 50,

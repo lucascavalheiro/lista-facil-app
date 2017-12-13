@@ -3,9 +3,9 @@ import { Colors, Metrics, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
+    position: 'relative',
     flex: 1,
-    height: Metrics.screenHeight - 170,
-    padding: Metrics.marginVertical
+    padding: Metrics.marginVertical,
   },
   topContainer: {
     flexDirection: 'row',
@@ -68,6 +68,9 @@ export default StyleSheet.create({
   totalBalance: {
     marginTop: 5
   },
+  balanceContainer: {
+    flex: 1,
+  },
   oweContainer: {
     flex: 1,
     alignItems: 'center',
@@ -85,6 +88,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   bottomContainer: {
+    flex: 1,
     position: 'absolute',
     left: 0,
     right: 0,

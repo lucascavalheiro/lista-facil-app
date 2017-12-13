@@ -143,33 +143,31 @@ class Expenses extends Component {
             <ActionButton style={{ container: styles.addButton }} onPress={this.onCreateExpense}/>
           </View>
         </View>
-        <View>
-          <ScrollView style={styles.balanceContainer}>
-            <View style={styles.owner}>
-              <UserPicture
-                userPicture={user.photoURL}
-                size={50}
-              />
-              <View style={styles.totalBalanceContainer}>
-                <Text style={styles.totalBalance}>Balanço total</Text>
-                <View style={styles.oweContainer}>
-                  <View>{totalBalanceMessage}</View>
-                </View>
+        <ScrollView style={styles.balanceContainer}>
+          <View style={styles.owner}>
+            <UserPicture
+              userPicture={user.photoURL}
+              size={50}
+            />
+            <View style={styles.totalBalanceContainer}>
+              <Text style={styles.totalBalance}>Balanço total</Text>
+              <View style={styles.oweContainer}>
+                <View>{totalBalanceMessage}</View>
               </View>
             </View>
-            <View style={styles.usersContainer}>
-              {members && members.map((member, i) =>
-                <UserBalance
-                  user={member}
-                  key={i}
-                  totalValue={totalValue}
-                  splitedValue={splitedValue}
-                  expenses={expenses}
-                />
-              )}
-            </View>
-          </ScrollView>
-        </View>
+          </View>
+          <View style={styles.usersContainer}>
+            {members && members.map((member, i) =>
+              <UserBalance
+                user={member}
+                key={i}
+                totalValue={totalValue}
+                splitedValue={splitedValue}
+                expenses={expenses}
+              />
+            )}
+          </View>
+        </ScrollView>
         <View style={styles.bottomContainer}>
           <View style={styles.total}>
             <Text style={styles.totalSpendingTitle}>Total gasto</Text>
