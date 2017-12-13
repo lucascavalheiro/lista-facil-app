@@ -158,6 +158,7 @@ class Signup extends Component {
             onChangeText={this.onChangeName}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            height={40}
             labelColor={Colors.white}
           />
           <TextField
@@ -166,6 +167,7 @@ class Signup extends Component {
             onChangeText={this.onChangeNewEmail}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            height={40}
             labelColor={Colors.white}
           />
           <TextField
@@ -174,6 +176,7 @@ class Signup extends Component {
             onChangeText={this.onChangeNewPassword}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            height={40}
             labelColor={Colors.white}
             secureTextEntry
           />

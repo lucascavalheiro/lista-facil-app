@@ -143,7 +143,7 @@ class Expenses extends Component {
             <ActionButton style={{ container: styles.addButton }} onPress={this.onCreateExpense}/>
           </View>
         </View>
-        <ScrollView style={styles.balanceContainer}>
+        <ScrollView style={styles.balanceContainer} overScrollMode='always'>
           <View style={styles.owner}>
             <UserPicture
               userPicture={user.photoURL}

@@ -52,8 +52,8 @@ class Login extends Component {
 
   onLoginPress = () => {
     this.setState({ loading: true })
-    // firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
-    firebase.auth().signInWithEmailAndPassword('phillipeframos@gmail.com', 'p670rto')
+    firebase.auth().signInWithEmailAndPassword(this.props.email, this.props.password)
+    // firebase.auth().signInWithEmailAndPassword('phillipeframos@gmail.com', 'p670rto')
       .then((user) => {
         // console.log('User successfully logged in', user)
         this.props.navigation.navigate('Home')
@@ -89,6 +89,7 @@ class Login extends Component {
             onChangeText={this.onChangeEmail}
             highlightColor={Colors.white}
             textColor={Colors.white}
+            height={40}
             labelColor={Colors.white}
           />
           <TextField
@@ -98,12 +99,13 @@ class Login extends Component {
             highlightColor={Colors.white}
             textColor={Colors.white}
             labelColor={Colors.white}
+            height={40}
             secureTextEntry
           />
           <Button
             text="ENTRAR"
             raised
-            disabled={!this.props.email === '' || !this.props.password === ''}
+            disabled={this.props.email === '' || this.props.password === ''}
             onPress={this.onLoginPress}
             style={{container: styles.button}}
           />

@@ -69,7 +69,7 @@ export default StyleSheet.create({
     marginTop: 5
   },
   balanceContainer: {
-    flex: 1,
+    flex: 1
   },
   oweContainer: {
     flex: 1,
@@ -86,6 +86,7 @@ export default StyleSheet.create({
   },
   usersContainer: {
     flex: 1,
+    paddingBottom: 70
   },
   bottomContainer: {
     flex: 1,
