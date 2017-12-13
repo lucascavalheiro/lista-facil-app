@@ -7,10 +7,9 @@ import firebase from 'react-native-firebase'
 
 import styles from './Item.styles.js'
 
-
 class Item extends Component {
   state = {
-    memberPhoto: ''
+    memberPhoto: null
   }
 
   componentDidMount() {
@@ -46,7 +45,7 @@ class Item extends Component {
         <TouchableOpacity onPress={assignDisabled ? null : () => onAssignPress(item)}>
           <Image
             style={styles.photo}
-            source={memberPhoto ? {uri: memberPhoto} : Images.iconPersonPlus}
+            source={item.assigned === "" ? Images.iconPersonPlus : {uri: memberPhoto}}
           />
         </TouchableOpacity>
       </View>
